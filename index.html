@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dinesh Elumalai — AI & Data Science Portfolio</title>
 <meta name="description" content="Portfolio of Dinesh Elumalai — AI & Data Science graduate specializing in Generative AI, LLMs, RAG, LangChain and FastAPI.">
+<meta name="theme-color" content="#060608">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dinesh Elumalai — AI/ML Engineer">
+<meta property="og:description" content="Building practical AI applications with LLMs, retrieval systems and Python backends.">
+<meta property="og:image" content="dinesh-profile.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060608'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='30' font-weight='bold' fill='%233b82f6' text-anchor='middle'%3EDE%3C/text%3E%3C/svg%3E">
 <style>
   :root{
@@ -65,6 +70,7 @@
   .nav-links a:hover{color:var(--text)}
   .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
   .nav-links a.active{color:var(--a1)}
+  .nav-links a[href="#lab"]{color:#8ab4ff}
   .nav-right{display:flex;align-items:center;gap:10px}
 
   .burger{display:none;background:none;border:1px solid var(--card-border);border-radius:10px;padding:9px 11px;cursor:pointer}
@@ -124,6 +130,12 @@
     position:relative;overflow:hidden;
   }
   .card:hover{border-color:rgba(138,180,255,.4);background:#101319}
+  .card{--glow-x:50%;--glow-y:50%}
+  @media(pointer:fine){
+    .card::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;
+      background:radial-gradient(360px circle at var(--glow-x) var(--glow-y),rgba(59,130,246,.11),transparent 62%)}
+    .card:hover::after{opacity:1}
+  }
   /* ---------- about ---------- */
   .about-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:start}
   .about-text p{color:var(--muted);margin-bottom:18px}
@@ -153,6 +165,13 @@
     border:1px solid var(--card-border);padding:6px 13px;border-radius:999px;transition:.2s;
   }
   .pill:hover{border-color:var(--a1);color:var(--a1)}
+  .stack-graph{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin-top:28px}
+  .stack-node{position:relative;z-index:1;min-height:72px;padding:14px 12px;border:1px solid var(--card-border);border-radius:13px;
+    background:#0d0f13;color:var(--text);font:inherit;font-size:.86rem;font-weight:650;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+  .stack-node:not(:last-child)::after{content:"";position:absolute;left:100%;top:50%;width:15px;height:1px;background:rgba(138,180,255,.48);transform-origin:left;animation:line-in .7s both}
+  .stack-node:hover,.stack-node[aria-pressed="true"]{border-color:#60a5fa;background:#101a2a;transform:translateY(-3px)}
+  .stack-hint{color:var(--muted);font-size:.86rem;margin-top:14px;min-height:1.5em}
+  @keyframes line-in{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
   /* ---------- timeline ---------- */
   .timeline{position:relative;padding-left:34px}
@@ -184,8 +203,29 @@
   .proj h3{font-size:1.18rem;margin-bottom:10px}
   .proj p{color:var(--muted);font-size:.9rem;margin-bottom:20px}
   .proj .pills{margin-top:auto}
-  .proj{display:flex;flex-direction:column;min-height:290px}
+  .proj{display:flex;flex-direction:column;min-height:290px;transition:transform .22s,box-shadow .22s,border-color .2s}
+  @media(pointer:fine){.proj:hover{transform:perspective(900px) rotateX(var(--tilt-y,0deg)) rotateY(var(--tilt-x,0deg)) scale(1.02);box-shadow:0 18px 42px rgba(0,0,0,.28)}}
   .proj::before{content:none}
+  .ai-lab{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}
+  .lab-card{padding:26px}
+  .lab-card h3{font-size:1.08rem;margin-bottom:8px}
+  .lab-card>p{color:var(--muted);font-size:.88rem;margin-bottom:18px}
+  .demo-form{display:grid;gap:12px}
+  .demo-form label{font-size:.82rem;color:var(--muted)}
+  .demo-form textarea{width:100%;min-height:86px;resize:vertical;padding:12px 14px;border-radius:10px;border:1px solid var(--card-border);background:#080a0e;color:var(--text);font:inherit}
+  .demo-results{margin-top:15px;display:grid;gap:9px}
+  .demo-result{padding:12px;border:1px solid var(--card-border);border-radius:10px;background:rgba(255,255,255,.025);font-size:.84rem}
+  .demo-result strong{display:block;color:#8ab4ff;font-size:.75rem;margin-bottom:4px}
+  .demo-status{min-height:1.4em;margin-top:10px;color:var(--muted);font-size:.82rem}
+  .pipeline{display:flex;flex-direction:column;justify-content:center;gap:12px}
+  .pipeline-step{display:flex;align-items:center;gap:13px;padding:11px 13px;border:1px solid var(--card-border);border-radius:10px;background:rgba(255,255,255,.025)}
+  .pipeline-step b{display:grid;place-items:center;width:27px;height:27px;border-radius:8px;background:var(--a1-soft);color:#8ab4ff;font:600 .72rem ui-monospace,monospace;flex:none}
+  .pipeline-step span{font-size:.86rem}
+  .pipeline-arrow{height:12px;width:1px;background:#60a5fa;margin:-12px 0 -12px 26px;opacity:.65}
+  .github-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  .github-stat{padding:14px;border:1px solid var(--card-border);border-radius:10px;text-align:center}
+  .github-stat strong{display:block;font-size:1.2rem;color:#8ab4ff}
+  .github-stat span{font-size:.72rem;color:var(--muted)}
 
   /* ---------- certifications ---------- */
   .cert-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
@@ -227,8 +267,8 @@
   #toTop:hover{border-color:var(--a1)}
 
   /* ---------- reveal ---------- */
-  .reveal{opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s ease}
-  .reveal.in{opacity:1;transform:none}
+  .reveal{opacity:0;transform:translateY(12px);filter:blur(3px);transition:opacity .45s ease,transform .45s ease,filter .45s ease}
+  .reveal.in{opacity:1;transform:none;filter:none}
   .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
 
   /* ---------- scroll layout ---------- */
@@ -269,6 +309,9 @@
     .cert-grid{grid-template-columns:repeat(2,1fr)}
     .stats{grid-template-columns:repeat(2,1fr)}
     .contact-cards{grid-template-columns:1fr}
+    .stack-graph{grid-template-columns:1fr;gap:10px}
+    .stack-node:not(:last-child)::after{left:50%;top:100%;width:1px;height:11px;transform:none}
+    .ai-lab{grid-template-columns:1fr}
   }
   @media(max-width:720px){
     .nav-inner{padding:0 16px;gap:8px}
@@ -287,7 +330,7 @@
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation:none!important;transition:none!important}
     html{scroll-behavior:auto}
-    .reveal{opacity:1;transform:none}
+    .reveal{opacity:1;transform:none;filter:none}
   }
 </style>
 <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
@@ -308,6 +351,7 @@
         <li><a href="#skills">Skills</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#lab">AI Lab</a></li>
         <li><a href="#certifications">Certs</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -347,6 +391,9 @@
           </a>
           <a href="https://www.linkedin.com/in/dinesh-elumalai-616569259" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          </a>
+          <a href="https://github.com/dinianalyst" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .9a11.1 11.1 0 0 0-3.51 21.63c.55.1.76-.24.76-.54v-2.08c-3.1.68-3.75-1.32-3.75-1.32-.5-1.28-1.24-1.62-1.24-1.62-1.02-.7.08-.69.08-.69 1.13.08 1.73 1.16 1.73 1.16 1 .72 2.6.52 3.23.4.1-.72.39-1.22.7-1.5-2.48-.28-5.09-1.24-5.09-5.5 0-1.22.44-2.22 1.16-3-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.05 1.15a10.6 10.6 0 0 1 5.55 0c2.12-1.44 3.06-1.15 3.06-1.15.61 1.54.23 2.68.11 2.96.72.78 1.16 1.78 1.16 3 0 4.27-2.62 5.21-5.12 5.49.4.34.75 1.02.75 2.05v3.04c0 .3.2.65.77.54A11.1 11.1 0 0 0 12 .9Z"/></svg>
           </a>
           <a href="tel:+919094220997" aria-label="Phone" title="Phone">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -487,6 +534,18 @@
         <div class="pills"><span class="pill">Data Cleaning</span><span class="pill">Visualization</span><span class="pill">Power BI</span><span class="pill">Excel</span></div>
       </div>
     </div>
+    <div class="card reveal" style="margin-top:22px;padding:26px">
+      <h3>How the stack connects</h3>
+      <p class="sub" style="margin:6px 0 0;font-size:.88rem">Select a node to see its role in a typical AI application workflow.</p>
+      <div class="stack-graph" role="group" aria-label="AI application technology flow">
+        <button class="stack-node" type="button" aria-pressed="true" data-detail="Python is the language I use to prepare data and build application logic.">Python</button>
+        <button class="stack-node" type="button" aria-pressed="false" data-detail="Machine learning and NLP techniques turn prepared data into useful signals.">ML / NLP</button>
+        <button class="stack-node" type="button" aria-pressed="false" data-detail="LLMs and LangChain help orchestrate language-model application workflows.">LLMs · LangChain</button>
+        <button class="stack-node" type="button" aria-pressed="false" data-detail="Embeddings and vector databases support retrieval over relevant knowledge.">Embeddings · Vector DB</button>
+        <button class="stack-node" type="button" aria-pressed="false" data-detail="FastAPI exposes application capabilities through backend endpoints.">FastAPI</button>
+      </div>
+      <p class="stack-hint" id="stackHint" aria-live="polite">Python is the language I use to prepare data and build application logic.</p>
+    </div>
   </div>
 </section>
 
@@ -547,6 +606,41 @@
         <p>An AI-powered support assistant that retrieves answers from company documents using RAG, maintains conversation context and automates customer query resolution — built with LangChain, OpenAI, FastAPI and ChromaDB.</p>
         <div class="pills"><span class="pill">LangChain</span><span class="pill">OpenAI</span><span class="pill">FastAPI</span><span class="pill">ChromaDB</span><span class="pill">Conversational AI</span></div>
       </div>
+    </div>
+    <section class="ai-lab" id="lab" aria-labelledby="lab-title">
+      <div class="card lab-card reveal">
+        <span class="kicker">Browser-only · No model API</span>
+        <h3 id="lab-title">Try a tiny retrieval demo</h3>
+        <p>Search a small portfolio knowledge base with local TF-IDF ranking. This demonstrates retrieval; it does not call an LLM or send your query anywhere.</p>
+        <form class="demo-form" id="retrievalForm">
+          <label for="retrievalQuery">Ask about projects, tools or experience</label>
+          <textarea id="retrievalQuery" placeholder="What does DocuChat use for document search?" required></textarea>
+          <button class="btn btn-primary" type="submit">Find relevant notes</button>
+        </form>
+        <p class="demo-status" id="demoStatus" aria-live="polite">Try: “What is NeuroPick?” or “Which tools power DocuChat?”</p>
+        <div class="demo-results" id="demoResults" aria-live="polite"></div>
+      </div>
+      <div class="card lab-card reveal d1">
+        <span class="kicker">RAG · Architecture</span>
+        <h3>From documents to grounded answers</h3>
+        <p>A simplified RAG flow: retrieve relevant source passages first, then give those passages to the language model as context.</p>
+        <div class="pipeline" role="img" aria-label="RAG pipeline: documents are chunked, embedded, searched in a vector store, then retrieved context grounds the language model answer.">
+          <div class="pipeline-step"><b>01</b><span>Documents → chunks</span></div><div class="pipeline-arrow"></div>
+          <div class="pipeline-step"><b>02</b><span>Chunks → embeddings</span></div><div class="pipeline-arrow"></div>
+          <div class="pipeline-step"><b>03</b><span>Vector search → relevant context</span></div><div class="pipeline-arrow"></div>
+          <div class="pipeline-step"><b>04</b><span>Context + question → grounded answer</span></div>
+        </div>
+      </div>
+    </section>
+    <div class="card reveal" style="margin-top:18px;padding:24px">
+      <h3>GitHub activity</h3>
+      <p style="color:var(--muted);font-size:.86rem">Public profile details loaded from GitHub without authentication.</p>
+      <div class="github-stats" id="githubStats" aria-live="polite">
+        <div class="github-stat"><strong>—</strong><span>Public repos</span></div>
+        <div class="github-stat"><strong>—</strong><span>Followers</span></div>
+        <div class="github-stat"><strong>—</strong><span>Following</span></div>
+      </div>
+      <a href="https://github.com/dinianalyst" target="_blank" rel="noopener" style="display:inline-block;margin-top:14px;color:#8ab4ff">Explore GitHub profile ↗</a>
     </div>
   </div>
 </section>
@@ -632,6 +726,72 @@ if('IntersectionObserver' in window){
     if(entry.isIntersecting){entry.target.classList.add('in');revealObserver.unobserve(entry.target);}
   }),{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+  const graphHint=document.getElementById('stackHint');
+  document.querySelectorAll('.stack-node').forEach(node=>node.addEventListener('click',()=>{
+    document.querySelectorAll('.stack-node').forEach(item=>item.setAttribute('aria-pressed',String(item===node)));
+    graphHint.textContent=node.dataset.detail;
+  }));
+
+  const notes=[
+    {title:'NeuroPick',text:'NeuroPick is an AI product recommendation platform that analyzes product features, customer reviews, ratings and prices. It uses machine learning, NLP, sentiment analysis and Python.'},
+    {title:'DocuChat AI',text:'DocuChat AI is a Retrieval-Augmented Generation document question answering assistant. It works with uploaded PDFs and uses LangChain, OpenAI, ChromaDB and a FastAPI backend.'},
+    {title:'AI Customer Support Agent',text:'The AI Customer Support Agent retrieves answers from company documents with RAG, maintains conversation context and automates customer query resolution using LangChain, OpenAI, FastAPI and ChromaDB.'},
+    {title:'Experience and tools',text:'Dinesh has experience in data analysis, data management and artificial intelligence internships. His portfolio lists Python, SQL, FastAPI, LangChain, vector databases, machine learning and data visualization.'}
+  ];
+  const tokenize=text=>text.toLowerCase().match(/[a-z0-9]+/g)||[];
+  document.getElementById('retrievalForm').addEventListener('submit',event=>{
+    event.preventDefault();
+    const queryTokens=tokenize(document.getElementById('retrievalQuery').value);
+    const results=notes.map(note=>{
+      const tokens=tokenize(note.text), counts=new Map();
+      tokens.forEach(token=>counts.set(token,(counts.get(token)||0)+1));
+      const score=queryTokens.reduce((sum,token)=>sum+(counts.has(token)?1+Math.log(1+counts.get(token)):0),0);
+      return {...note,score};
+    }).filter(note=>note.score>0).sort((a,b)=>b.score-a.score).slice(0,2);
+    const resultsEl=document.getElementById('demoResults');
+    const status=document.getElementById('demoStatus');
+    resultsEl.replaceChildren();
+    if(!results.length){status.textContent='No matching note found. Try a project name or a tool such as FastAPI.';return;}
+    status.textContent='Retrieved the closest matching notes from the local sample set:';
+    results.forEach(note=>{
+      const article=document.createElement('article');article.className='demo-result';
+      const heading=document.createElement('strong');heading.textContent=note.title;
+      const body=document.createElement('span');body.textContent=note.text;
+      article.append(heading,body);resultsEl.append(article);
+    });
+  });
+
+  fetch('https://api.github.com/users/dinianalyst',{headers:{Accept:'application/vnd.github+json'}})
+    .then(response=>{if(!response.ok)throw new Error('GitHub profile unavailable');return response.json();})
+    .then(profile=>{
+      const stats=document.getElementById('githubStats');
+      [['public_repos','Public repos'],['followers','Followers'],['following','Following']].forEach(([key,label])=>{
+        const item=document.createElement('div');item.className='github-stat';
+        const value=document.createElement('strong');value.textContent=Number(profile[key]).toLocaleString();
+        const caption=document.createElement('span');caption.textContent=label;
+        item.append(value,caption);
+        if(key==='public_repos')stats.replaceChildren(item);else stats.append(item);
+      });
+    }).catch(()=>{
+      document.getElementById('githubStats').innerHTML='<p class="demo-status">GitHub stats are temporarily unavailable. Open the profile for current activity.</p>';
+    });
+
+  if(!REDUCED&&matchMedia('(pointer:fine)').matches){
+    document.querySelectorAll('.card').forEach(card=>card.addEventListener('pointermove',event=>{
+      const rect=card.getBoundingClientRect();
+      card.style.setProperty('--glow-x',`${event.clientX-rect.left}px`);
+      card.style.setProperty('--glow-y',`${event.clientY-rect.top}px`);
+      if(card.classList.contains('proj')){
+        const x=(event.clientX-rect.left)/rect.width-.5,y=(event.clientY-rect.top)/rect.height-.5;
+        card.style.setProperty('--tilt-x',`${(x*4).toFixed(2)}deg`);
+        card.style.setProperty('--tilt-y',`${(-y*4).toFixed(2)}deg`);
+      }
+    }));
+    document.querySelectorAll('.proj').forEach(card=>card.addEventListener('pointerleave',()=>{
+      card.style.removeProperty('--tilt-x');card.style.removeProperty('--tilt-y');
+    }));
+  }
 
   const sectionObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
     if(!entry.isIntersecting)return;
