@@ -3,6 +3,7 @@
 Personal portfolio website of **Dinesh Elumalai**, Junior AI Engineer.
 
 - Built with plain HTML, CSS and JavaScript (no dependencies)
+- Fullscreen slide-deck navigation — no page scrolling (navbar, dots, arrows, keyboard, swipe)
 - 7 switchable themes with a Midnight Black default
 - Sections: About, Skills, Experience, Projects, Certifications, Contact
 

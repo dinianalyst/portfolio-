@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dinesh Elumalai — AI & Data Science Portfolio</title>
 <meta name="description" content="Portfolio of Dinesh Elumalai — AI & Data Science graduate specializing in Generative AI, LLMs, RAG, LangChain and FastAPI.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060608'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='30' font-weight='bold' fill='%233b82f6' text-anchor='middle'%3EDE%3C/text%3E%3C/svg%3E">
 <style>
   /* ============ THEMES ============ */
   :root, html[data-theme="black"]{
@@ -108,7 +109,7 @@
   html[data-theme="professional"] .noise,html[data-theme="black"] .noise{opacity:.025}
 
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-  section{padding:96px 0;position:relative}
+  section{position:relative}
   .kicker{
     display:inline-flex;align-items:center;gap:8px;
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -183,7 +184,7 @@
   .burger span{display:block;width:20px;height:2px;background:var(--text);margin:4px 0;border-radius:2px;transition:.3s}
 
   /* ---------- hero ---------- */
-  .hero{min-height:100vh;display:flex;align-items:center;padding-top:72px}
+  .hero{display:flex;align-items:center}
   .hero-grid{display:grid;grid-template-columns:1.25fr .9fr;gap:56px;align-items:center;width:100%}
   .badge{
     display:inline-flex;align-items:center;gap:9px;font-size:.82rem;color:#10b981;
@@ -390,6 +391,108 @@
   .reveal.in{opacity:1;transform:none}
   .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}
 
+  /* ---------- deck mode (no page scrolling) ---------- */
+  html,body{height:100%;overflow:hidden}
+  footer,#toTop{display:none}
+  #deck{position:fixed;inset:72px 0 0 0;overflow:hidden}
+  .slide{position:absolute;inset:0;display:flex;overflow-y:auto;overflow-x:hidden;
+    opacity:0;visibility:hidden;transform:translateX(70px);pointer-events:none;
+    transition:opacity .55s ease,transform .55s ease,visibility 0s linear .55s;
+    scrollbar-width:thin;scrollbar-color:var(--card-border) transparent}
+  .slide.before{transform:translateX(-70px)}
+  .slide.active{opacity:1;visibility:visible;transform:none;pointer-events:auto;
+    transition:opacity .55s ease,transform .55s ease}
+  .slide>.wrap{margin:auto;padding:28px 24px 84px;width:100%}
+  .slide .kicker{margin-bottom:8px}
+  .slide h2.title{margin-bottom:8px;font-size:clamp(1.5rem,3vw,2.1rem)}
+  .slide .sub{margin-bottom:22px}
+  #home .orb-card{width:min(280px,64vw)}
+  #home .hero-grid{gap:36px}
+  #home h1{font-size:clamp(2rem,5vw,3.2rem)}
+  #home .hero p.lead{margin-bottom:24px}
+  #home .cta-row{margin-bottom:26px}
+  #home .stats{margin-top:26px;gap:12px}
+  #home .stat{padding:14px 12px}
+  #home .stat .num{font-size:1.5rem}
+  #home .marquee{margin-top:20px;border:1px solid var(--card-border);border-radius:14px;padding:12px 0}
+  .slide .card{padding:16px 18px}
+  .slide .skills-grid{gap:12px}
+  .slide .skill-card .head{margin-bottom:10px}
+  .slide .skill-card .ic{width:38px;height:38px}
+  .slide .skill-card h3{font-size:.95rem}
+  .slide .pill{font-size:.76rem;padding:5px 11px}
+  .slide .pills{gap:6px}
+  .slide .t-item{padding-bottom:18px}
+  .slide .t-item h3{font-size:1.05rem}
+  .slide .t-item p{font-size:.89rem;line-height:1.55}
+  .slide .proj-grid{gap:16px}
+  .slide .proj .p-ic{width:44px;height:44px;margin-bottom:14px}
+  .slide .proj p{font-size:.87rem;margin-bottom:14px}
+  .slide .t-item{padding-bottom:24px}
+  .slide .cert{padding:22px 14px}
+  .slide .contact-box{padding:40px 28px}
+  .slide .contact-box>p{margin-bottom:28px}
+  .slide .contact-cards{margin-bottom:28px}
+  .deck-bar{position:fixed;left:0;right:0;bottom:0;height:64px;z-index:45;
+    display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 22px;
+    background:var(--nav-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    border-top:1px solid var(--card-border)}
+  .deck-count{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.78rem;color:var(--muted);min-width:150px}
+  .deck-count b{color:var(--a1);font-weight:600}
+  .deck-dots{display:flex;gap:8px;align-items:center}
+  .deck-dot{width:9px;height:9px;border-radius:999px;border:1px solid var(--card-border);
+    background:var(--pill-bg);cursor:pointer;padding:0;transition:.3s}
+  .deck-dot:hover{border-color:var(--a1)}
+  .deck-dot.active{width:28px;background:var(--grad);border-color:transparent}
+  .deck-nav{display:flex;gap:10px;min-width:150px;justify-content:flex-end}
+  .deck-arrow{width:40px;height:40px;border-radius:11px;border:1px solid var(--card-border);
+    background:var(--card);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.25s}
+  .deck-arrow svg{width:17px;height:17px}
+  .deck-arrow:hover:not(:disabled){border-color:var(--a1);color:var(--a1);transform:translateY(-2px)}
+  .deck-arrow:disabled{opacity:.35;cursor:default}
+  .slide .t-item:last-child{padding-bottom:0}
+  @media(max-width:720px){
+    .deck-count{min-width:0}
+    .deck-name-wrap{display:none}
+    .deck-nav{min-width:0}
+    .deck-bar{padding:0 14px}
+  }
+  /* compact layout for short laptop screens */
+  @media(max-height:760px) and (min-width:961px){
+    .slide>.wrap{padding:20px 24px 76px}
+    .slide .sub{margin-bottom:14px;font-size:.9rem}
+    #home .badge{margin-bottom:16px}
+    #home h1{font-size:clamp(1.8rem,4vw,2.6rem)}
+    #home .role-line{margin-bottom:12px;min-height:1.6em}
+    #home .hero p.lead{font-size:.92rem;margin-bottom:16px}
+    #home .cta-row{margin-bottom:18px}
+    #home .orb-card{width:min(220px,50vw)}
+    #home .stats{margin-top:16px}
+    #home .stat{padding:10px}
+    #home .stat .num{font-size:1.3rem}
+    #home .marquee{display:none}
+    .slide .card{padding:10px 12px}
+    .slide .skills-grid{gap:10px}
+    .slide .skill-card .head{margin-bottom:6px}
+    .slide .skill-card .ic{width:32px;height:32px}
+    .slide .skill-card .ic svg{width:17px;height:17px}
+    .slide .skill-card h3{font-size:.9rem}
+    .slide .pill{font-size:.72rem;padding:4px 9px}
+    .slide .t-item{padding-bottom:10px}
+    .slide .t-item h3{font-size:.98rem;margin:6px 0 2px}
+    .slide .t-item .org{font-size:.85rem;margin-bottom:6px}
+    .slide .t-item .when{font-size:.68rem;padding:3px 10px}
+    .slide .t-item p{font-size:.82rem;line-height:1.45}
+    /* timeline becomes 3 side-by-side cards on short screens */
+    #experience .timeline{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding-left:0}
+    #experience .timeline::before{display:none}
+    #experience .t-item{padding:16px;border:1px solid var(--card-border);border-radius:14px;background:var(--card)}
+    #experience .t-item::before{display:none}
+    #experience .t-item:hover{transform:translateY(-4px)}
+    .slide .proj p{font-size:.84rem}
+    .slide .contact-box{padding:28px 24px}
+  }
+
   /* ---------- responsive ---------- */
   @media(max-width:1060px){
     .nav-links a{padding:8px 8px;font-size:.84rem}
@@ -406,7 +509,7 @@
     .contact-cards{grid-template-columns:1fr}
   }
   @media(max-width:720px){
-    section{padding:72px 0}
+    .slide>.wrap{padding-top:24px;padding-bottom:88px}
     .nav-inner{padding:0 16px;gap:8px}
     .logo{font-size:1rem}
     .nav-right{gap:8px}
@@ -476,9 +579,9 @@
   </div>
 </header>
 
-<main>
+<main id="deck">
 <!-- ================= HERO ================= -->
-<section class="hero" id="home">
+<section class="hero slide" id="home" data-name="Home">
   <div class="wrap">
     <div class="hero-grid">
       <div>
@@ -522,11 +625,8 @@
       <div class="stat reveal d2"><div class="num"><span data-count="8.2" data-decimals="1">0</span></div><div class="lbl">CGPA · B.Tech AI &amp; DS</div></div>
       <div class="stat reveal d3"><div class="num"><span data-count="4">0</span></div><div class="lbl">Certifications</div></div>
     </div>
-  </div>
-</section>
 
-<!-- ================= MARQUEE ================= -->
-<div class="marquee" aria-hidden="true">
+    <div class="marquee" aria-hidden="true">
   <div class="m-track">
     <div class="m-group">
       <span>Python</span><i>✦</i><span>LangChain</span><i>✦</i><span>RAG</span><i>✦</i><span>LLMs</span><i>✦</i><span>FastAPI</span><i>✦</i><span>ChromaDB</span><i>✦</i><span>Pinecone</span><i>✦</i><span>Prompt Engineering</span><i>✦</i><span>LangGraph</span><i>✦</i><span>Docker</span><i>✦</i><span>AWS</span><i>✦</i><span>Machine Learning</span><i>✦</i>
@@ -536,9 +636,12 @@
     </div>
   </div>
 </div>
+  </div>
+</section>
+
 
 <!-- ================= ABOUT ================= -->
-<section id="about">
+<section class="slide" id="about" data-name="About">
   <div class="wrap">
     <span class="kicker reveal">01 · About Me</span>
     <h2 class="title reveal">Turning data into <span class="grad-text">intelligent products</span></h2>
@@ -584,7 +687,7 @@
 </section>
 
 <!-- ================= SKILLS ================= -->
-<section id="skills">
+<section class="slide" id="skills" data-name="Skills">
   <div class="wrap">
     <span class="kicker reveal">02 · Technical Skills</span>
     <h2 class="title reveal">My <span class="grad-text">AI toolkit</span></h2>
@@ -658,7 +761,7 @@
 </section>
 
 <!-- ================= EXPERIENCE ================= -->
-<section id="experience">
+<section class="slide" id="experience" data-name="Experience">
   <div class="wrap">
     <span class="kicker reveal">03 · Experience</span>
     <h2 class="title reveal">Where I've <span class="grad-text">worked &amp; learned</span></h2>
@@ -687,7 +790,7 @@
 </section>
 
 <!-- ================= PROJECTS ================= -->
-<section id="projects">
+<section class="slide" id="projects" data-name="Projects">
   <div class="wrap">
     <span class="kicker reveal">04 · Projects</span>
     <h2 class="title reveal">Things I've <span class="grad-text">built with AI</span></h2>
@@ -719,7 +822,7 @@
 </section>
 
 <!-- ================= CERTIFICATIONS ================= -->
-<section id="certifications">
+<section class="slide" id="certifications" data-name="Certifications">
   <div class="wrap">
     <span class="kicker reveal">05 · Certifications</span>
     <h2 class="title reveal">Credentials &amp; <span class="grad-text">continuous learning</span></h2>
@@ -746,7 +849,7 @@
 </section>
 
 <!-- ================= CONTACT ================= -->
-<section id="contact">
+<section class="slide" id="contact" data-name="Contact">
   <div class="wrap">
     <div class="contact-box reveal">
       <span class="kicker" style="justify-content:center">06 · Contact</span>
@@ -781,6 +884,19 @@
 <footer>
   <div class="wrap">© 2026 <span class="grad-text">Dinesh Elumalai</span> · AI &amp; Data Science · Designed &amp; built with passion</div>
 </footer>
+
+<div class="deck-bar" id="deckBar">
+  <div class="deck-count"><b id="deckNum">01</b> / <span id="deckTotal">07</span><span class="deck-name-wrap"> · <span id="deckName">Home</span></span></div>
+  <div class="deck-dots" id="deckDots" role="tablist" aria-label="Sections"></div>
+  <div class="deck-nav">
+    <button class="deck-arrow" id="deckPrev" aria-label="Previous section">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <button class="deck-arrow" id="deckNext" aria-label="Next section">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
+</div>
 
 <button id="toTop" aria-label="Back to top">↑</button>
 
@@ -877,14 +993,34 @@ const FINE = matchMedia('(pointer: fine)').matches;
     }
     node.replaceWith(frag);
   }
+  /* group letters into unbreakable words so the name never splits mid-word */
+  function splitWords(node,grad){
+    const frag=document.createDocumentFragment();
+    const words=node.textContent.split(/(\s+)/);
+    words.forEach(w=>{
+      if(!w)return;
+      if(/^\s+$/.test(w)){frag.appendChild(document.createTextNode(' '));return;}
+      const word=document.createElement('span');
+      word.style.cssText='display:inline-block;white-space:nowrap';
+      for(const ch of w){
+        const s=document.createElement('span');
+        s.className='ltr'+(grad?' grad-text':'');
+        s.textContent=ch;
+        s.style.animationDelay=(i++*0.04)+'s';
+        word.appendChild(s);
+      }
+      frag.appendChild(word);
+    });
+    node.replaceWith(frag);
+  }
   [...h.childNodes].forEach(n=>{
-    if(n.nodeType===3)splitInto(n,false);
+    if(n.nodeType===3)splitWords(n,false);
     else if(n.nodeType===1){
       const grad=n.classList.contains('grad-text');
       const text=n.textContent;
       n.classList.remove('grad-text');
       n.textContent=text;
-      splitInto(n,grad);
+      splitWords(n,grad);
     }
   });
 })();
@@ -910,32 +1046,124 @@ const FINE = matchMedia('(pointer: fine)').matches;
   tick();
 })();
 
-/* ---------- reveal on scroll ---------- */
+/* ---------- slide deck navigation ---------- */
+const slides=[...document.querySelectorAll('.slide')];
+const navLinksEl=document.getElementById('navLinks');
+const navLinks=[...navLinksEl.querySelectorAll('a')];
+const dotsBox=document.getElementById('deckDots');
+const deckNum=document.getElementById('deckNum');
+const deckName=document.getElementById('deckName');
+const prevBtn=document.getElementById('deckPrev');
+const nextBtn=document.getElementById('deckNext');
+const prog=document.getElementById('progress');
+let cur=0,lastWheel=0;
+
+document.getElementById('deckTotal').textContent=String(slides.length).padStart(2,'0');
+const dots=slides.map((sl,i)=>{
+  const b=document.createElement('button');
+  b.className='deck-dot';b.type='button';
+  b.setAttribute('aria-label',sl.dataset.name||sl.id);
+  b.addEventListener('click',()=>go(i));
+  dotsBox.appendChild(b);return b;
+});
+
+function playReveals(sl){
+  const els=sl.querySelectorAll('.reveal');
+  els.forEach(el=>el.classList.remove('in'));
+  requestAnimationFrame(()=>requestAnimationFrame(()=>els.forEach(el=>el.classList.add('in'))));
+}
+function animateCounters(sl){
+  sl.querySelectorAll('[data-count]').forEach(el=>{
+    const end=parseFloat(el.dataset.count),dec=parseInt(el.dataset.decimals||0);
+    if(REDUCED){el.textContent=end.toFixed(dec);return;}
+    const t0=performance.now(),dur=1200;
+    (function step(t){
+      const p=Math.min((t-t0)/dur,1),ease=1-Math.pow(1-p,3);
+      el.textContent=(end*ease).toFixed(dec);
+      if(p<1)requestAnimationFrame(step);
+    })(t0);
+  });
+}
+function go(i){
+  i=Math.max(0,Math.min(slides.length-1,i));
+  cur=i;
+  slides.forEach((sl,idx)=>{
+    sl.classList.toggle('active',idx===i);
+    sl.classList.toggle('before',idx<i);
+    sl.setAttribute('aria-hidden',idx===i?'false':'true');
+  });
+  navLinks.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+slides[i].id));
+  dots.forEach((d,idx)=>{d.classList.toggle('active',idx===i);d.setAttribute('aria-current',idx===i?'true':'false');});
+  deckNum.textContent=String(i+1).padStart(2,'0');
+  deckName.textContent=slides[i].dataset.name||slides[i].id;
+  prevBtn.disabled=i===0;nextBtn.disabled=i===slides.length-1;
+  prog.style.transform='scaleX('+((i+1)/slides.length)+')';
+  try{history.replaceState(null,'','#'+slides[i].id);}catch(e){}
+  navLinksEl.classList.remove('open');
+  slides[i].scrollTop=0;
+  playReveals(slides[i]);
+  if(slides[i].id==='home')animateCounters(slides[i]);
+}
+prevBtn.addEventListener('click',()=>go(cur-1));
+nextBtn.addEventListener('click',()=>go(cur+1));
+
+/* in-page anchors -> slides */
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const idx=slides.findIndex(sl=>sl.id===a.getAttribute('href').slice(1));
+    if(idx>-1){e.preventDefault();go(idx);}
+  });
+});
+
+/* keyboard */
+addEventListener('keydown',e=>{
+  if(e.target.matches('input,textarea,select'))return;
+  if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();go(cur+1);}
+  else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(cur-1);}
+  else if(e.key==='Home'){e.preventDefault();go(0);}
+  else if(e.key==='End'){e.preventDefault();go(slides.length-1);}
+});
+
+/* wheel: flip slides, but allow internal scrolling on short screens first */
+document.getElementById('deck').addEventListener('wheel',e=>{
+  const sl=slides[cur];
+  const canDown=sl.scrollTop+sl.clientHeight<sl.scrollHeight-2;
+  const canUp=sl.scrollTop>2;
+  if((e.deltaY>0&&canDown)||(e.deltaY<0&&canUp))return;
+  if(Math.abs(e.deltaY)<25)return;
+  const now=Date.now();
+  if(now-lastWheel<900)return;
+  lastWheel=now;
+  go(cur+(e.deltaY>0?1:-1));
+},{passive:true});
+
+/* touch swipe */
 (function(){
-  const io=new IntersectionObserver(es=>{
-    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
-  },{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  let x0=0,y0=0,t0=0;
+  const deck=document.getElementById('deck');
+  deck.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY;t0=Date.now();},{passive:true});
+  deck.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-x0,dy=e.changedTouches[0].clientY-y0;
+    if(Date.now()-t0>600)return;
+    const sl=slides[cur];
+    const scrollable=sl.scrollHeight>sl.clientHeight+2;
+    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>60)go(cur+(dx<0?1:-1));
+    else if(!scrollable&&Math.abs(dy)>70)go(cur+(dy<0?1:-1));
+  },{passive:true});
 })();
 
-/* ---------- animated counters ---------- */
+/* burger + initial slide */
+document.getElementById('burger').addEventListener('click',()=>navLinksEl.classList.toggle('open'));
+document.getElementById('nav').classList.add('scrolled');
 (function(){
-  const io=new IntersectionObserver(es=>{
-    es.forEach(e=>{
-      if(!e.isIntersecting)return;
-      io.unobserve(e.target);
-      const el=e.target,end=parseFloat(el.dataset.count),dec=parseInt(el.dataset.decimals||0);
-      if(REDUCED){el.textContent=end.toFixed(dec);return;}
-      const t0=performance.now(),dur=1400;
-      (function step(t){
-        const p=Math.min((t-t0)/dur,1),ease=1-Math.pow(1-p,3);
-        el.textContent=(end*ease).toFixed(dec);
-        if(p<1)requestAnimationFrame(step);
-      })(t0);
-    });
-  },{threshold:.6});
-  document.querySelectorAll('[data-count]').forEach(el=>io.observe(el));
+  const h=location.hash.slice(1);
+  const idx=slides.findIndex(sl=>sl.id===h);
+  go(idx>-1?idx:0);
 })();
+addEventListener('hashchange',()=>{
+  const idx=slides.findIndex(sl=>sl.id===location.hash.slice(1));
+  if(idx>-1&&idx!==cur)go(idx);
+});
 
 /* ---------- 3D tilt + spotlight ---------- */
 (function(){
@@ -976,38 +1204,7 @@ const FINE = matchMedia('(pointer: fine)').matches;
   });
 })();
 
-/* ---------- nav, progress, glows, toTop ---------- */
-(function(){
-  const nav=document.getElementById('nav'),links=document.getElementById('navLinks'),
-        burger=document.getElementById('burger'),top=document.getElementById('toTop'),
-        prog=document.getElementById('progress'),
-        g1=document.querySelector('.glow-1'),g2=document.querySelector('.glow-2');
-  burger.addEventListener('click',()=>links.classList.toggle('open'));
-  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
-  function onScroll(){
-    const y=scrollY,max=document.documentElement.scrollHeight-innerHeight;
-    nav.classList.toggle('scrolled',y>10);
-    top.classList.toggle('show',y>600);
-    prog.style.transform=`scaleX(${max>0?y/max:0})`;
-    if(!REDUCED){
-      g1.style.transform=`translateY(${y*.06}px)`;
-      g2.style.transform=`translateY(${-y*.04}px)`;
-    }
-  }
-  addEventListener('scroll',onScroll,{passive:true});onScroll();
-  top.addEventListener('click',()=>scrollTo({top:0,behavior:REDUCED?'auto':'smooth'}));
-  const secs=[...document.querySelectorAll('section[id]')];
-  const map={};links.querySelectorAll('a').forEach(a=>map[a.getAttribute('href').slice(1)]=a);
-  const io=new IntersectionObserver(es=>{
-    es.forEach(e=>{
-      if(e.isIntersecting){
-        links.querySelectorAll('a').forEach(a=>a.classList.remove('active'));
-        if(map[e.target.id])map[e.target.id].classList.add('active');
-      }
-    });
-  },{rootMargin:'-40% 0px -55% 0px'});
-  secs.forEach(s=>io.observe(s));
-})();
+/* ---------- (scroll-based nav removed — deck mode handles navigation) ---------- */
 </script>
 </body>
 </html>
