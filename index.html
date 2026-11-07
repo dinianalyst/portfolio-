@@ -227,7 +227,12 @@
   .proj p{color:var(--muted);font-size:.9rem;margin-bottom:20px}
   .proj .pills{margin-top:auto}
   .proj{display:flex;flex-direction:column;min-height:290px;transition:transform .22s,box-shadow .22s,border-color .2s}
+  .proj-grid{perspective:1300px}
+  .proj.reveal{opacity:0;filter:blur(8px);transform:translate3d(var(--entry-x,0px),56px,-100px) scale(.93);transform-origin:center top;transition:opacity .75s ease,transform .85s cubic-bezier(.2,.75,.2,1),filter .75s ease;transition-delay:var(--reveal-delay,0s)}
+  .proj:nth-child(1){--entry-x:-24px;z-index:1}.proj:nth-child(2){--entry-x:0px;z-index:2}.proj:nth-child(3){--entry-x:24px;z-index:3}
+  .proj.reveal.in{opacity:1;filter:none;transform:translate3d(0,0,0) scale(1)}
   @media(pointer:fine){.proj:hover{transform:perspective(900px) rotateX(var(--tilt-y,0deg)) rotateY(var(--tilt-x,0deg)) scale(1.02);box-shadow:0 18px 42px rgba(0,0,0,.28)}}
+  @media(pointer:fine){.proj.reveal.in:hover{transform:perspective(900px) rotateX(var(--tilt-y,0deg)) rotateY(var(--tilt-x,0deg)) scale(1.02)}}
   .proj::before{content:none}
   .ai-lab{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}
   .lab-card{padding:26px}
@@ -328,6 +333,7 @@
     .about-grid{grid-template-columns:1fr}
     .skills-grid{grid-template-columns:repeat(2,1fr)}
     .proj-grid{grid-template-columns:1fr}
+    .proj:nth-child(n){--entry-x:0px}
     .cert-grid{grid-template-columns:repeat(2,1fr)}
     .stats{grid-template-columns:repeat(2,1fr)}
     .contact-cards{grid-template-columns:1fr}
@@ -355,11 +361,12 @@
     *,*::before,*::after{animation:none!important;transition:none!important}
     html{scroll-behavior:auto}
     .reveal{opacity:1;transform:none;filter:none}
+    .proj.reveal{opacity:1;transform:none;filter:none}
     .stack-node:not(:last-child)::after{transform:scaleX(1)}
   }
   @media(max-width:720px) and (prefers-reduced-motion:reduce){.stack-node:not(:last-child)::after{transform:scaleY(1)}}
 </style>
-<noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
+<noscript><style>.reveal,.proj.reveal{opacity:1;transform:none;filter:none}</style></noscript>
 </head>
 <body>
 
