@@ -85,6 +85,9 @@
   .hero-intro{display:block;color:var(--muted);font-size:.46em;line-height:1.3;letter-spacing:0;font-weight:500;margin-bottom:10px}
   .hero-name{display:block;max-width:100%;width:max-content}
   .role-line{font-size:clamp(1.05rem,2.4vw,1.3rem);color:var(--muted);margin-bottom:22px}
+  .role-rotator{display:inline-block;min-width:12ch;color:#8ab4ff}
+  .role-rotator::after{content:"";display:inline-block;width:1px;height:.95em;margin-left:2px;vertical-align:-.12em;background:#8ab4ff;animation:role-caret .9s steps(1,end) infinite}
+  @keyframes role-caret{50%{opacity:0}}
   .hero p.lead{color:var(--muted);max-width:540px;margin-bottom:34px}
   .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:38px}
   .btn{
@@ -184,14 +187,15 @@
   .timeline-walker{position:absolute;left:9px;top:20px;z-index:3;width:28px;height:46px;transform:translate(-50%,-50%);pointer-events:none;opacity:0;transition:top .12s linear,opacity .2s}
   .timeline-walker.visible{opacity:1}
   .timeline-walker svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 3px 5px rgba(0,0,0,.55))}
-  .walker-head{fill:#edbd96;stroke:#171a22;stroke-width:1.2}
-  .walker-hair{fill:#171a22}
-  .walker-shirt{fill:#3b82f6;stroke:#15264a;stroke-width:.8}
-  .walker-limb{fill:none;stroke:#edbd96;stroke-width:2.7;stroke-linecap:round;stroke-linejoin:round;transform-box:fill-box;transform-origin:top center}
-  .walker-leg{fill:none;stroke:#202939;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;transform-box:fill-box;transform-origin:top center}
-  .walker-shoe{fill:#dce8ff}
-  .timeline-walker.walking .walker-arm-a,.timeline-walker.walking .walker-leg-a{animation:step-a .38s ease-in-out infinite alternate}
-  .timeline-walker.walking .walker-arm-b,.timeline-walker.walking .walker-leg-b{animation:step-b .38s ease-in-out infinite alternate}
+  .robot-head,.robot-body{fill:#172538;stroke:#60a5fa;stroke-width:1.2}
+  .robot-face{fill:#06101b;stroke:#38bdf8;stroke-width:.8}
+  .robot-eye{fill:#67e8f9;filter:drop-shadow(0 0 2px #38bdf8)}
+  .robot-antenna,.robot-limb{fill:none;stroke:#93c5fd;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .robot-limb,.robot-leg{transform-box:fill-box;transform-origin:top center}
+  .robot-leg{fill:none;stroke:#64748b;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+  .robot-foot{fill:#38bdf8;stroke:#0c4a6e;stroke-width:.6}
+  .timeline-walker.walking .robot-arm-a,.timeline-walker.walking .robot-leg-a{animation:step-a .38s ease-in-out infinite alternate}
+  .timeline-walker.walking .robot-arm-b,.timeline-walker.walking .robot-leg-b{animation:step-b .38s ease-in-out infinite alternate}
   .timeline-year{position:absolute;left:50%;top:-16px;transform:translateX(-50%);padding:1px 5px;border:1px solid rgba(96,165,250,.45);border-radius:5px;background:#0a101b;color:#b8d3ff;font:600 9px ui-monospace,monospace;letter-spacing:.04em;white-space:nowrap}
   @keyframes step-a{to{transform:rotate(18deg)}}
   @keyframes step-b{to{transform:rotate(-18deg)}}
@@ -394,7 +398,7 @@
       <div>
         <span class="badge"><span class="dot"></span> Currently working as a Junior AI Engineer at Cherubim AI Infosoft</span>
         <h1><span class="hero-intro">Hi, I'm</span><span class="hero-name grad-text">Dinesh Elumalai</span></h1>
-        <div class="role-line">I build <span class="grad-text">Generative AI applications</span></div>
+        <div class="role-line">I build <span class="role-rotator" id="roleRotator" aria-live="off">Generative AI applications</span></div>
         <p class="lead">
           AI &amp; Data Science graduate crafting intelligent applications with LLMs,
           Retrieval-Augmented Generation and modern Python backends — turning complex
@@ -581,15 +585,18 @@
       <div class="timeline-walker" id="timelineWalker" aria-hidden="true">
         <span class="timeline-year" id="timelineYear">2026</span>
         <svg viewBox="0 0 28 48" aria-hidden="true">
-          <path class="walker-hair" d="M8 6c0-4 3-6 6-6s6 2 6 6l-1 2H9z"/>
-          <circle class="walker-head" cx="14" cy="7" r="5"/>
-          <path class="walker-hair" d="M9 6c1-4 8-5 10 0-2-1-3-2-5-2s-3 1-5 2z"/>
-          <path class="walker-shirt" d="m10 12 4-1 4 1 2 10-3 1-.5-6 .5 10h-7l.5-10-.5 6-3-1z"/>
-          <path class="walker-limb walker-arm-a" d="m10 14-3 6 1 4"/>
-          <path class="walker-limb walker-arm-b" d="m18 14 3 5-1 4"/>
-          <path class="walker-leg walker-leg-a" d="m11 27-2 8 2 6"/>
-          <path class="walker-leg walker-leg-b" d="m17 27 2 8-2 6"/>
-          <path class="walker-shoe" d="M9 39h3l1 2H9a1 1 0 0 1 0-2zm6 0h3l2 2h-5z"/>
+          <path class="robot-antenna" d="M14 5V2"/><circle class="robot-eye" cx="14" cy="1.5" r="1.3"/>
+          <rect class="robot-head" x="7" y="5" width="14" height="13" rx="4"/>
+          <rect class="robot-face" x="9" y="8" width="10" height="7" rx="2.5"/>
+          <circle class="robot-eye" cx="12" cy="11" r="1"/><circle class="robot-eye" cx="16" cy="11" r="1"/>
+          <path class="robot-antenna" d="M11.5 13.5h5"/>
+          <rect class="robot-body" x="8" y="20" width="12" height="11" rx="3"/>
+          <circle class="robot-eye" cx="14" cy="25.5" r="1.6"/>
+          <path class="robot-antenna robot-limb robot-arm-a" d="M8 22 5.5 27l1 3"/>
+          <path class="robot-antenna robot-limb robot-arm-b" d="M20 22 22.5 27l-1 3"/>
+          <path class="robot-leg robot-leg-a" d="m11 31-2 6 1 5"/>
+          <path class="robot-leg robot-leg-b" d="m17 31 2 6-1 5"/>
+          <path class="robot-foot" d="M8.5 41h3l1.5 1.5H8a1 1 0 0 1 .5-1.5zm7 0h3l1.5 1.5H15a1 1 0 0 1 .5-1.5z"/>
         </svg>
       </div>
       <div class="t-item reveal" data-year="2026">
@@ -754,6 +761,23 @@
 
 <script>
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const roleRotator=document.getElementById('roleRotator');
+if(!REDUCED&&roleRotator){
+  const rolePhrases=['Generative AI applications','RAG-powered assistants','LLM-based products','AI recommendation tools','Python AI backends'];
+  let phraseIndex=0,characterIndex=rolePhrases[0].length,deleting=true;
+  function typeRolePhrase(){
+    if(document.hidden){setTimeout(typeRolePhrase,500);return;}
+    const phrase=rolePhrases[phraseIndex];
+    let delay;
+    if(deleting&&characterIndex>0){characterIndex--;delay=32;}
+    else if(deleting){phraseIndex=(phraseIndex+1)%rolePhrases.length;deleting=false;delay=260;}
+    else if(characterIndex<phrase.length){characterIndex++;delay=56;}
+    else{deleting=true;delay=1250;}
+    roleRotator.textContent=rolePhrases[phraseIndex].slice(0,characterIndex);
+    setTimeout(typeRolePhrase,delay);
+  }
+  setTimeout(typeRolePhrase,1500);
+}
 
 /* ---------- standard page scrolling ---------- */
 const sections=[...document.querySelectorAll('.slide')];
