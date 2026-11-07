@@ -81,6 +81,10 @@
 
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
+  .skip-link{position:fixed;top:10px;left:10px;z-index:100;padding:10px 16px;border-radius:10px;background:var(--text);color:var(--bg);font-weight:700;transform:translateY(-160%);transition:transform .2s}
+  .skip-link:focus{transform:translateY(0)}
+  :focus-visible{outline:3px solid var(--a2);outline-offset:3px}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   body{
     background:var(--bg);color:var(--text);
     font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
@@ -536,6 +540,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#deck">Skip to content</a>
+
 <div id="progress" aria-hidden="true"></div>
 <div class="noise" aria-hidden="true"></div>
 <canvas id="net" aria-hidden="true"></canvas>
@@ -546,7 +552,7 @@
 <header class="nav" id="nav">
   <div class="nav-inner">
     <a class="logo" href="#home" aria-label="Junior AI Engineer — home">Junior <span>AI Engineer</span></a>
-    <nav>
+    <nav aria-label="Main navigation">
       <ul class="nav-links" id="navLinks">
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
@@ -572,14 +578,14 @@
           <button class="theme-opt" data-theme="light"><span class="sw" style="background:linear-gradient(135deg,#0284c7,#db2777)"></span>Arctic Light<span class="chk">✓</span></button>
         </div>
       </div>
-      <button class="burger" id="burger" aria-label="Toggle menu">
+      <button class="burger" id="burger" aria-label="Toggle menu" aria-controls="navLinks" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </div>
 </header>
 
-<main id="deck">
+<main id="deck" tabindex="-1" aria-label="Portfolio content">
 <!-- ================= HERO ================= -->
 <section class="hero slide" id="home" data-name="Home">
   <div class="wrap">
@@ -587,7 +593,7 @@
       <div>
         <span class="badge"><span class="dot"></span> Open to AI / ML opportunities</span>
         <h1 id="heroTitle">Hi, I'm <span class="grad-text">Dinesh&nbsp;Elumalai</span></h1>
-        <div class="role-line">I build <span id="typed"></span><span class="caret"></span></div>
+        <div class="role-line">I build <span class="sr-only">generative AI applications and RAG-powered assistants</span><span id="typed" aria-hidden="true"></span><span class="caret" aria-hidden="true"></span></div>
         <p class="lead">
           AI &amp; Data Science graduate crafting intelligent applications with LLMs,
           Retrieval-Augmented Generation and modern Python backends — turning complex
@@ -1100,6 +1106,7 @@ function go(i){
   prog.style.transform='scaleX('+((i+1)/slides.length)+')';
   try{history.replaceState(null,'','#'+slides[i].id);}catch(e){}
   navLinksEl.classList.remove('open');
+  document.getElementById('burger').setAttribute('aria-expanded','false');
   slides[i].scrollTop=0;
   playReveals(slides[i]);
   if(slides[i].id==='home')animateCounters(slides[i]);
@@ -1153,7 +1160,10 @@ document.getElementById('deck').addEventListener('wheel',e=>{
 })();
 
 /* burger + initial slide */
-document.getElementById('burger').addEventListener('click',()=>navLinksEl.classList.toggle('open'));
+document.getElementById('burger').addEventListener('click',e=>{
+  const open=navLinksEl.classList.toggle('open');
+  e.currentTarget.setAttribute('aria-expanded',String(open));
+});
 document.getElementById('nav').classList.add('scrolled');
 (function(){
   const h=location.hash.slice(1);
