@@ -4,7 +4,7 @@ Personal portfolio website of **Dinesh Elumalai**, Junior AI Engineer.
 
 - Built with plain HTML, CSS and JavaScript (no dependencies)
 - Responsive scroll-based layout with sticky navigation and section links
-- Fixed Midnight Black theme with blue accents
+- Minimal midnight theme with restrained blue accents
 - Sections: About, Skills, Experience, Projects, Certifications, Contact
 
 ## Run locally
