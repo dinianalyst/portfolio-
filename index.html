@@ -339,7 +339,7 @@
   /* ---------- scroll layout ---------- */
   body{min-height:100vh;padding-top:72px;overflow-x:hidden;overflow-y:auto}
   #portfolio-content{position:relative;overflow:visible}
-  .slide{position:relative;inset:auto;display:block;min-height:0;overflow:visible;scroll-margin-top:88px}
+  .slide{position:relative;inset:auto;display:block;min-height:0;overflow:visible}
   .slide>.wrap{margin:0 auto;padding:96px 24px;width:100%}
   .slide:not(#home){border-top:1px solid var(--card-border);background:transparent}
   .slide:not(#home)>.wrap{padding-top:88px;padding-bottom:88px}
@@ -1025,6 +1025,35 @@ if(!REDUCED&&matchMedia('(pointer:fine)').matches){
     });
     heroVisual.addEventListener('pointerleave',()=>{orbCard.style.transform='';});
   }
+}
+
+/* magnetic section snapping: when scrolling stops near a section edge,
+   glide to align it under the nav; never yanks mid-section reading */
+if(!REDUCED){
+  const snapSections=[...document.querySelectorAll('.slide, #lab')];
+  let snapTimer=0,snapLock=false,navLock=false,navLockTimer=0;
+  const evaluateSnap=()=>{
+    if(document.hidden)return;
+    let best=0,bestDist=Infinity;
+    for(const section of snapSections){
+      const dist=Math.round(section.getBoundingClientRect().top)-88;
+      const abs=Math.abs(dist);
+      if(abs<bestDist){bestDist=abs;best=dist;}
+    }
+    if(bestDist>4&&bestDist<innerHeight*.45){
+      snapLock=true;
+      scrollTo({top:scrollY+best,behavior:'smooth'});
+      setTimeout(()=>{snapLock=false;},700);
+    }
+  };
+  const scheduleSnapCheck=()=>{clearTimeout(snapTimer);snapTimer=setTimeout(evaluateSnap,140);};
+  const lockNav=()=>{navLock=true;clearTimeout(navLockTimer);navLockTimer=setTimeout(()=>{navLock=false;scheduleSnapCheck();},2200);};
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',lockNav));
+  toTop.addEventListener('click',lockNav);
+  addEventListener('scroll',()=>{
+    if(snapLock||navLock||document.hidden)return;
+    scheduleSnapCheck();
+  },{passive:true});
 }
 
 document.getElementById('burger').addEventListener('click',e=>{
