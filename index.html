@@ -201,10 +201,11 @@
   /* ---------- timeline ---------- */
   .timeline{position:relative;padding-left:34px}
   .timeline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:1px;background:var(--card-border)}
-  .timeline::after{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;border-radius:2px;transform:scaleY(var(--timeline-progress,0));transform-origin:top;background:linear-gradient(180deg,#60a5fa,#38bdf8);box-shadow:0 0 12px rgba(56,189,248,.38);pointer-events:none}
-  .timeline-walker{position:absolute;left:9px;top:20px;z-index:3;width:28px;height:46px;transform:translate(-50%,-50%);pointer-events:none;opacity:0;transition:top .12s linear,opacity .2s}
-  .timeline-walker.visible{opacity:1}
-  .timeline-walker svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 3px 5px rgba(0,0,0,.55))}
+  #aiCompanion{position:fixed;right:18px;top:14vh;z-index:45;width:48px;height:64px;display:grid;place-items:center;pointer-events:none;transform:translateY(-50%);transition:top .45s cubic-bezier(.2,.8,.2,1)}
+  #aiCompanion svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 3px 7px rgba(0,0,0,.6));animation:companion-float 3.4s ease-in-out infinite}
+  .ai-companion-label{position:absolute;right:54px;top:50%;transform:translateY(-50%);padding:5px 9px;border:1px solid rgba(96,165,250,.25);border-radius:8px;background:rgba(8,12,20,.86);backdrop-filter:blur(10px);color:#b8d3ff;font:600 .62rem ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+  #aiCompanion.walking .robot-arm-a,#aiCompanion.walking .robot-leg-a{animation:step-a .38s ease-in-out infinite alternate}
+  #aiCompanion.walking .robot-arm-b,#aiCompanion.walking .robot-leg-b{animation:step-b .38s ease-in-out infinite alternate}
   .robot-head,.robot-body{fill:#172538;stroke:#60a5fa;stroke-width:1.2}
   .robot-face{fill:#06101b;stroke:#38bdf8;stroke-width:.8}
   .robot-eye{fill:#67e8f9;filter:drop-shadow(0 0 2px #38bdf8)}
@@ -212,9 +213,7 @@
   .robot-limb,.robot-leg{transform-box:fill-box;transform-origin:top center}
   .robot-leg{fill:none;stroke:#64748b;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
   .robot-foot{fill:#38bdf8;stroke:#0c4a6e;stroke-width:.6}
-  .timeline-walker.walking .robot-arm-a,.timeline-walker.walking .robot-leg-a{animation:step-a .38s ease-in-out infinite alternate}
-  .timeline-walker.walking .robot-arm-b,.timeline-walker.walking .robot-leg-b{animation:step-b .38s ease-in-out infinite alternate}
-  .timeline-year{position:absolute;left:50%;top:-16px;transform:translateX(-50%);padding:1px 5px;border:1px solid rgba(96,165,250,.45);border-radius:5px;background:#0a101b;color:#b8d3ff;font:600 9px ui-monospace,monospace;letter-spacing:.04em;white-space:nowrap}
+  @keyframes companion-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
   @keyframes step-a{to{transform:rotate(18deg)}}
   @keyframes step-b{to{transform:rotate(-18deg)}}
   .t-item{position:relative;padding:0 0 32px 8px;margin-bottom:0;transition:none}
@@ -362,6 +361,8 @@
   @keyframes line-down{from{transform:scaleY(0)}to{transform:scaleY(1)}}
   @media(max-width:720px){
     .nav-inner{padding:0 16px;gap:8px}
+    #aiCompanion{right:76px;top:auto!important;bottom:14px;width:34px;height:46px;transform:none}
+    .ai-companion-label{display:none}
     .logo{font-size:1rem}
     .nav-right{gap:8px}
     .burger{display:block}
@@ -380,7 +381,6 @@
     .reveal{opacity:1;transform:none;filter:none}
     .proj.reveal{opacity:1;transform:none;filter:none}
     .stack-node:not(:last-child)::after{transform:scaleX(1)}
-    .timeline::after{transform:scaleY(1);box-shadow:none}
     .proj-grid{display:grid;grid-template-columns:1fr;gap:18px;padding:0;perspective:none}
     .proj{position:relative;top:auto;width:100%;margin:0!important;transform:none}
     .proj.reveal{opacity:1;filter:none;transform:none}
@@ -396,6 +396,23 @@
 
 <div id="progress" aria-hidden="true"></div>
 <canvas id="neuralCanvas" aria-hidden="true"></canvas>
+<div id="aiCompanion" aria-hidden="true">
+  <span class="ai-companion-label" id="aiCompanionLabel">Home</span>
+  <svg viewBox="0 0 28 48" role="presentation">
+    <path class="robot-antenna" d="M14 5V2"/><circle class="robot-eye" cx="14" cy="1.5" r="1.3"/>
+    <rect class="robot-head" x="7" y="5" width="14" height="13" rx="4"/>
+    <rect class="robot-face" x="9" y="8" width="10" height="7" rx="2.5"/>
+    <circle class="robot-eye" cx="12" cy="11" r="1"/><circle class="robot-eye" cx="16" cy="11" r="1"/>
+    <path class="robot-antenna" d="M11.5 13.5h5"/>
+    <rect class="robot-body" x="8" y="20" width="12" height="11" rx="3"/>
+    <circle class="robot-eye" cx="14" cy="25.5" r="1.6"/>
+    <path class="robot-antenna robot-limb robot-arm-a" d="M8 22 5.5 27l1 3"/>
+    <path class="robot-antenna robot-limb robot-arm-b" d="M20 22 22.5 27l-1 3"/>
+    <path class="robot-leg robot-leg-a" d="m11 31-2 6 1 5"/>
+    <path class="robot-leg robot-leg-b" d="m17 31 2 6-1 5"/>
+    <path class="robot-foot" d="M8.5 41h3l1.5 1.5H8a1 1 0 0 1 .5-1.5zm7 0h3l1.5 1.5H15a1 1 0 0 1 .5-1.5z"/>
+  </svg>
+</div>
 
 <!-- ================= NAV ================= -->
 <header class="nav" id="nav">
@@ -612,23 +629,6 @@
     <h2 class="title reveal">Where I've <span class="grad-text">worked &amp; learned</span></h2>
     <p class="sub reveal">Hands-on industry exposure across data analytics, artificial intelligence and data operations.</p>
     <div class="timeline">
-      <div class="timeline-walker" id="timelineWalker" aria-hidden="true">
-        <span class="timeline-year" id="timelineYear">2026</span>
-        <svg viewBox="0 0 28 48" aria-hidden="true">
-          <path class="robot-antenna" d="M14 5V2"/><circle class="robot-eye" cx="14" cy="1.5" r="1.3"/>
-          <rect class="robot-head" x="7" y="5" width="14" height="13" rx="4"/>
-          <rect class="robot-face" x="9" y="8" width="10" height="7" rx="2.5"/>
-          <circle class="robot-eye" cx="12" cy="11" r="1"/><circle class="robot-eye" cx="16" cy="11" r="1"/>
-          <path class="robot-antenna" d="M11.5 13.5h5"/>
-          <rect class="robot-body" x="8" y="20" width="12" height="11" rx="3"/>
-          <circle class="robot-eye" cx="14" cy="25.5" r="1.6"/>
-          <path class="robot-antenna robot-limb robot-arm-a" d="M8 22 5.5 27l1 3"/>
-          <path class="robot-antenna robot-limb robot-arm-b" d="M20 22 22.5 27l-1 3"/>
-          <path class="robot-leg robot-leg-a" d="m11 31-2 6 1 5"/>
-          <path class="robot-leg robot-leg-b" d="m17 31 2 6-1 5"/>
-          <path class="robot-foot" d="M8.5 41h3l1.5 1.5H8a1 1 0 0 1 .5-1.5zm7 0h3l1.5 1.5H15a1 1 0 0 1 .5-1.5z"/>
-        </svg>
-      </div>
       <div class="t-item reveal" data-year="2026">
         <span class="when">CURRENT</span>
         <h3>Junior AI Engineer</h3>
@@ -864,29 +864,14 @@ if(!REDUCED&&roleRotator){
 }
 
 /* ---------- standard page scrolling ---------- */
-const sections=[...document.querySelectorAll('.slide')];
+const sections=[...document.querySelectorAll('.slide, #lab')];
 const nav=document.getElementById('nav');
 const navLinksEl=document.getElementById('navLinks');
 const navLinks=[...navLinksEl.querySelectorAll('a')];
 const prog=document.getElementById('progress');
 const toTop=document.getElementById('toTop');
-const timeline=document.querySelector('.timeline');
-const timelineWalker=document.getElementById('timelineWalker');
-const timelineYear=document.getElementById('timelineYear');
-function updateTimelineWalker(){
-  const rect=timeline.getBoundingClientRect();
-  if(rect.bottom<0||rect.top>innerHeight){timelineWalker.classList.remove('visible','walking');return;}
-  const y=Math.max(10,Math.min(rect.height-10,innerHeight*.52-rect.top));
-  timelineWalker.style.top=`${y}px`;
-  timeline.style.setProperty('--timeline-progress',String(Math.max(0,Math.min(1,(y-6)/(rect.height-12)))));
-  timelineWalker.classList.add('visible');
-  let nearest=null,nearestDistance=Infinity;
-  timeline.querySelectorAll('.t-item[data-year]').forEach(item=>{
-    const distance=Math.abs(item.offsetTop+item.offsetHeight/2-y);
-    if(distance<nearestDistance){nearest=item;nearestDistance=distance;}
-  });
-  if(nearest)timelineYear.textContent=nearest.dataset.year;
-}
+const aiCompanion=document.getElementById('aiCompanion');
+const aiCompanionLabel=document.getElementById('aiCompanionLabel');
 const revealElements=[...document.querySelectorAll('.reveal')];
 const revealGroups=new Map();
 revealElements.forEach(element=>{
@@ -981,15 +966,22 @@ if('IntersectionObserver' in window){
     }));
   }
 
-  const sectionObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
-    if(!entry.isIntersecting)return;
-    const id=entry.target.id;
+  const sectionObserver=new IntersectionObserver(entries=>{
+    if(!entries.length)return;
+    const marker=innerHeight*.42;
+    const current=sections.filter(section=>{
+      const rect=section.getBoundingClientRect();return rect.top<=marker&&rect.bottom>marker;
+    }).at(-1);
+    if(!current)return;
+    const id=current.id;
     navLinks.forEach(a=>{
       const active=a.getAttribute('href')==='#'+id;
       a.classList.toggle('active',active);
       if(active)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');
     });
-  }),{rootMargin:'-28% 0px -58% 0px',threshold:0});
+    aiCompanionLabel.textContent=current.dataset.name||id;
+    aiCompanion.dataset.section=id;
+  },{rootMargin:'-28% 0px -58% 0px',threshold:0});
   sections.forEach(section=>sectionObserver.observe(section));
 }else{
   document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
@@ -997,18 +989,19 @@ if('IntersectionObserver' in window){
 
 function updateScrollUI(){
   const maxScroll=document.documentElement.scrollHeight-innerHeight;
-  prog.style.transform='scaleX('+(maxScroll>0?scrollY/maxScroll:0)+')';
+  const scrollProgress=maxScroll>0?Math.max(0,Math.min(1,scrollY/maxScroll)):0;
+  prog.style.transform='scaleX('+scrollProgress+')';
+  if(innerWidth>720)aiCompanion.style.top=`${14+scrollProgress*64}vh`;
   nav.classList.toggle('scrolled',scrollY>8);
   toTop.classList.toggle('show',scrollY>500);
-  updateTimelineWalker();
 }
 addEventListener('scroll',updateScrollUI,{passive:true});
-let walkerTimer;
+let companionWalkTimer;
 addEventListener('scroll',()=>{
-  if(REDUCED||!timelineWalker.classList.contains('visible'))return;
-  timelineWalker.classList.add('walking');
-  clearTimeout(walkerTimer);
-  walkerTimer=setTimeout(()=>timelineWalker.classList.remove('walking'),180);
+  if(REDUCED)return;
+  aiCompanion.classList.add('walking');
+  clearTimeout(companionWalkTimer);
+  companionWalkTimer=setTimeout(()=>aiCompanion.classList.remove('walking'),180);
 },{passive:true});
 addEventListener('resize',updateScrollUI);
 updateScrollUI();
@@ -1023,6 +1016,10 @@ navLinksEl.addEventListener('click',e=>{
     document.getElementById('burger').setAttribute('aria-expanded','false');
   }
 });
+navLinks.forEach(link=>link.addEventListener('click',()=>{
+  aiCompanionLabel.textContent=link.textContent.trim();
+  aiCompanion.dataset.section=link.getAttribute('href').slice(1);
+}));
 toTop.addEventListener('click',()=>scrollTo({top:0,behavior:REDUCED?'auto':'smooth'}));
 
 </script>
