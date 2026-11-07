@@ -33,6 +33,8 @@
   /* scroll progress */
   #progress{position:fixed;top:0;left:0;height:2px;width:100%;z-index:70;
     background:var(--a1);transform-origin:0 50%;transform:scaleX(0)}
+  #neuralCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.26}
+  #portfolio-content,footer{position:relative;z-index:2}
 
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
   section{position:relative}
@@ -84,6 +86,15 @@
   .hero h1{font-size:clamp(2.5rem,5vw,4.4rem);line-height:1.02;font-weight:750;letter-spacing:-.055em;margin-bottom:20px}
   .hero-intro{display:block;color:var(--muted);font-size:.46em;line-height:1.3;letter-spacing:0;font-weight:500;margin-bottom:10px}
   .hero-name{display:block;max-width:100%;width:max-content}
+  .hero .badge{animation:hero-arrive .7s both;animation-delay:.04s}
+  .hero-intro{animation:hero-arrive .8s both;animation-delay:.14s}
+  .hero-name{animation:hero-arrive .95s cubic-bezier(.2,.8,.2,1) both;animation-delay:.27s}
+  .role-line{animation:hero-arrive .8s both;animation-delay:.42s}
+  .hero p.lead{animation:hero-arrive .8s both;animation-delay:.55s}
+  .hero .cta-row{animation:hero-arrive .8s both;animation-delay:.67s}
+  .hero .socials{animation:hero-arrive .8s both;animation-delay:.78s}
+  .hero-visual{animation:hero-arrive 1s cubic-bezier(.2,.8,.2,1) both;animation-delay:.42s}
+  @keyframes hero-arrive{from{opacity:0;transform:translateY(24px);filter:blur(9px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
   .role-line{font-size:clamp(1.05rem,2.4vw,1.3rem);color:var(--muted);margin-bottom:22px}
   .role-rotator{display:inline-block;min-width:12ch;color:#8ab4ff}
   .role-rotator::after{content:"";display:inline-block;width:1px;height:.95em;margin-left:2px;vertical-align:-.12em;background:#8ab4ff;animation:role-caret .9s steps(1,end) infinite}
@@ -383,6 +394,7 @@
 <a class="skip-link" href="#portfolio-content">Skip to content</a>
 
 <div id="progress" aria-hidden="true"></div>
+<canvas id="neuralCanvas" aria-hidden="true"></canvas>
 
 <!-- ================= NAV ================= -->
 <header class="nav" id="nav">
@@ -778,6 +790,60 @@
 
 <script>
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const neuralCanvas=document.getElementById('neuralCanvas');
+if(neuralCanvas){
+  const ctx=neuralCanvas.getContext('2d');
+  let canvasWidth=0,canvasHeight=0,canvasScale=1,networkNodes=[],networkPointer={x:-1000,y:-1000},networkFrame=0,lastNetworkFrame=0;
+  function resizeNeuralCanvas(){
+    canvasWidth=innerWidth;canvasHeight=innerHeight;canvasScale=Math.min(devicePixelRatio||1,1.5);
+    neuralCanvas.width=Math.round(canvasWidth*canvasScale);neuralCanvas.height=Math.round(canvasHeight*canvasScale);
+    ctx.setTransform(canvasScale,0,0,canvasScale,0,0);
+    const count=canvasWidth<700?20:36;
+    networkNodes=Array.from({length:count},()=>({x:Math.random()*canvasWidth,y:Math.random()*canvasHeight,
+      vx:(Math.random()-.5)*.26,vy:(Math.random()-.5)*.26,r:Math.random()*1.25+.7}));
+    drawNeuralNetwork();
+  }
+  function drawNeuralNetwork(){
+    ctx.clearRect(0,0,canvasWidth,canvasHeight);
+    const maxLink=canvasWidth<700?105:145;
+    for(let i=0;i<networkNodes.length;i++){
+      const node=networkNodes[i];
+      for(let j=i+1;j<networkNodes.length;j++){
+        const next=networkNodes[j],dx=node.x-next.x,dy=node.y-next.y,distance=Math.hypot(dx,dy);
+        if(distance<maxLink){
+          const alpha=(1-distance/maxLink)*.24;
+          ctx.strokeStyle=`rgba(76,155,255,${alpha})`;ctx.lineWidth=.7;
+          ctx.beginPath();ctx.moveTo(node.x,node.y);ctx.lineTo(next.x,next.y);ctx.stroke();
+        }
+      }
+      const pointerDistance=Math.hypot(node.x-networkPointer.x,node.y-networkPointer.y);
+      const highlighted=pointerDistance<145;
+      ctx.beginPath();ctx.arc(node.x,node.y,node.r+(highlighted?1.3:0),0,Math.PI*2);
+      ctx.fillStyle=highlighted?'rgba(103,232,249,.9)':'rgba(96,165,250,.64)';ctx.fill();
+    }
+  }
+  function animateNeuralNetwork(time){
+    if(document.hidden)return;
+    if(time-lastNetworkFrame>32){
+      lastNetworkFrame=time;
+      networkNodes.forEach(node=>{
+        node.x+=node.vx;node.y+=node.vy;
+        if(node.x<0||node.x>canvasWidth)node.vx*=-1;
+        if(node.y<0||node.y>canvasHeight)node.vy*=-1;
+      });
+      drawNeuralNetwork();
+    }
+    networkFrame=requestAnimationFrame(animateNeuralNetwork);
+  }
+  resizeNeuralCanvas();
+  if(!REDUCED)networkFrame=requestAnimationFrame(animateNeuralNetwork);
+  addEventListener('resize',resizeNeuralCanvas,{passive:true});
+  if(!REDUCED)addEventListener('pointermove',event=>{networkPointer.x=event.clientX;networkPointer.y=event.clientY;},{passive:true});
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden)cancelAnimationFrame(networkFrame);
+    else if(!REDUCED)networkFrame=requestAnimationFrame(animateNeuralNetwork);
+  });
+}
 const roleRotator=document.getElementById('roleRotator');
 if(!REDUCED&&roleRotator){
   const rolePhrases=['Generative AI applications','RAG-powered assistants','LLM-based products','AI recommendation tools','Python AI backends'];
