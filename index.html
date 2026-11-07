@@ -222,7 +222,7 @@
   .robot-limb,.robot-leg{transform-box:fill-box;transform-origin:top center;transition:transform .2s ease}
   .robot-leg{fill:none;stroke:#dbeafe;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
   .robot-foot{fill:#f8fafc;stroke:#60a5fa;stroke-width:.7}
-  @keyframes companion-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  @keyframes companion-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
   @keyframes idle-arm-a{to{transform:rotate(7deg)}}
   @keyframes idle-arm-b{to{transform:rotate(-7deg)}}
   @keyframes core-pulse{from{opacity:.65;transform:scale(.82)}to{opacity:1;transform:scale(1.12)}}
@@ -1032,7 +1032,7 @@ function updateScrollUI(){
   const side=sections.indexOf(activeSection)%2===0?'right':'left';
   const rawX=side==='right'?contentBounds.right+28:contentBounds.left-28;
   const companionX=Math.max(34,Math.min(innerWidth-34,rawX));
-  const floatY=innerHeight*.54+(REDUCED?0:Math.sin(scrollProgress*Math.PI*sections.length*2)*24);
+  const floatY=innerHeight*(.14+scrollProgress*.72);
   aiCompanion.dataset.side=side;
   moveCompanionTo(scrollX+companionX,scrollY+floatY);
   nav.classList.toggle('scrolled',scrollY>8);
