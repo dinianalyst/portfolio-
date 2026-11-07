@@ -103,13 +103,23 @@
   .orb-card{
     position:relative;width:min(340px,80vw);aspect-ratio:5/6;border-radius:16px;
     background:#101319;border:1px solid var(--card-border);box-shadow:0 18px 44px rgba(0,0,0,.24);
-    display:flex;align-items:center;justify-content:center;
+    display:flex;align-items:center;justify-content:center;overflow:hidden;
   }
   .portrait-frame{position:absolute;inset:0;border-radius:inherit;overflow:hidden}
   .portrait-photo{
     display:block;width:100%;height:100%;object-fit:cover;object-position:center;
     background:var(--chip-bg)
   }
+  .ai-overlay{
+    position:absolute;left:14px;right:14px;bottom:14px;display:flex;align-items:center;gap:11px;
+    padding:12px 14px;border:1px solid rgba(255,255,255,.14);border-radius:13px;
+    background:rgba(8,12,20,.76);backdrop-filter:blur(12px);color:#f4f7ff;
+    box-shadow:0 10px 30px rgba(0,0,0,.18)
+  }
+  .ai-mark{width:34px;height:34px;flex:none;color:#60a5fa}
+  .ai-overlay-label{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:#9aa8bd;margin-bottom:3px}
+  .ai-overlay-focus{font-size:.83rem;font-weight:650;letter-spacing:.01em}
+  .ai-live-dot{width:7px;height:7px;border-radius:50%;background:#34d399;margin-left:auto;box-shadow:0 0 12px rgba(52,211,153,.7)}
 
   /* stats */
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
@@ -356,6 +366,18 @@
       <div class="hero-visual">
         <div class="orb-card">
 <img class="portrait-photo" src="dinesh-profile.png" alt="Dinesh Elumalai, Junior AI Engineer" width="1199" height="1312" loading="eager" decoding="async" fetchpriority="high">
+          <div class="ai-overlay" aria-label="AI engineering focus: LLMs, RAG, Python">
+            <svg class="ai-mark" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+              <path d="M10 18h7m3 0h6M18 10v6m0 4v6" stroke="currentColor" stroke-width="1.5" opacity=".7"/>
+              <circle cx="9" cy="18" r="3" fill="#0b1220" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="27" cy="18" r="3" fill="#0b1220" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="18" cy="9" r="3" fill="#0b1220" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="18" cy="27" r="3" fill="#0b1220" stroke="currentColor" stroke-width="1.5"/>
+              <circle cx="18" cy="18" r="3" fill="currentColor"/>
+            </svg>
+            <div><div class="ai-overlay-label">AI engineering</div><div class="ai-overlay-focus">LLMs · RAG · Python</div></div>
+            <span class="ai-live-dot" aria-hidden="true"></span>
+          </div>
         </div>
       </div>
     </div>
