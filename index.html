@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="professional">
+<html lang="en" data-theme="black">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,17 @@
 <meta name="description" content="Portfolio of Dinesh Elumalai — AI & Data Science graduate specializing in Generative AI, LLMs, RAG, LangChain and FastAPI.">
 <style>
   /* ============ THEMES ============ */
-  :root, html[data-theme="professional"]{
+  :root, html[data-theme="black"]{
+    --bg:#060608; --text:#f2f4f8; --muted:#9aa3b2;
+    --card:rgba(255,255,255,.04); --card-border:rgba(255,255,255,.09);
+    --nav-bg:rgba(6,6,8,.78); --chip-bg:rgba(16,17,20,.92); --c-card-bg:rgba(12,13,16,.6);
+    --a1:#3b82f6; --a2:#38bdf8; --a3:#1d4ed8;
+    --a1-soft:rgba(59,130,246,.14); --a2-soft:rgba(56,189,248,.12);
+    --grad:linear-gradient(100deg,#2563eb,#3b82f6,#38bdf8);
+    --btn-text:#ffffff; --pill-bg:rgba(255,255,255,.06); --pill-text:#cbd5e1;
+    --shadow:rgba(0,0,0,.6); --glow-op:.10;
+  }
+  html[data-theme="professional"]{
     --bg:#f7f9fc; --text:#0f172a; --muted:#5b6b82;
     --card:rgba(255,255,255,.78); --card-border:rgba(15,23,42,.09);
     --nav-bg:rgba(247,249,252,.86); --chip-bg:rgba(255,255,255,.96); --c-card-bg:rgba(255,255,255,.85);
@@ -93,9 +103,9 @@
   .glow{position:fixed;border-radius:50%;filter:blur(120px);z-index:-1;pointer-events:none;opacity:var(--glow-op);transition:background .5s}
   .glow-1{width:520px;height:520px;background:var(--a1);top:-140px;left:-120px}
   .glow-2{width:560px;height:560px;background:var(--a2);bottom:-180px;right:-140px}
-  /* restrained effects for the professional theme */
-  html[data-theme="professional"] #net{opacity:.32}
-  html[data-theme="professional"] .noise{opacity:.025}
+  /* restrained effects for the professional & black themes */
+  html[data-theme="professional"] #net,html[data-theme="black"] #net{opacity:.32}
+  html[data-theme="professional"] .noise,html[data-theme="black"] .noise{opacity:.025}
 
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
   section{padding:96px 0;position:relative}
@@ -428,8 +438,8 @@
   }
 </style>
 <script>
-  /* apply saved theme before paint (v2 key resets old saved choices to the new professional default) */
-  try{var t=localStorage.getItem('de-theme-v2');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}
+  /* apply saved theme before paint (v3 key resets old saved choices to the new black default) */
+  try{var t=localStorage.getItem('de-theme-v3');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}
 </script>
 </head>
 <body>
@@ -461,6 +471,7 @@
         </button>
         <div class="theme-panel" id="themePanel" role="menu">
           <div class="tp-title">Choose theme</div>
+          <button class="theme-opt" data-theme="black"><span class="sw" style="background:linear-gradient(135deg,#0a0a0c,#3b82f6)"></span>Midnight Black<span class="chk">✓</span></button>
           <button class="theme-opt" data-theme="professional"><span class="sw" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6)"></span>Professional<span class="chk">✓</span></button>
           <button class="theme-opt" data-theme="cyber"><span class="sw" style="background:linear-gradient(135deg,#22d3ee,#c084fc)"></span>Cyber Night<span class="chk">✓</span></button>
           <button class="theme-opt" data-theme="aurora"><span class="sw" style="background:linear-gradient(135deg,#e879f9,#22d3ee)"></span>Aurora Bloom<span class="chk">✓</span></button>
@@ -795,11 +806,11 @@ const FINE = matchMedia('(pointer: fine)').matches;
 (function(){
   const btn=document.getElementById('themeBtn'),panel=document.getElementById('themePanel');
   const opts=[...panel.querySelectorAll('.theme-opt')];
-  function current(){return document.documentElement.getAttribute('data-theme')||'professional';}
+  function current(){return document.documentElement.getAttribute('data-theme')||'black';}
   function mark(){opts.forEach(o=>o.classList.toggle('active',o.dataset.theme===current()));}
   function apply(name){
     document.documentElement.setAttribute('data-theme',name);
-    try{localStorage.setItem('de-theme-v2',name);}catch(e){}
+    try{localStorage.setItem('de-theme-v3',name);}catch(e){}
     mark();
     window.dispatchEvent(new Event('themechange'));
   }
