@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="black">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +7,7 @@
 <meta name="description" content="Portfolio of Dinesh Elumalai — AI & Data Science graduate specializing in Generative AI, LLMs, RAG, LangChain and FastAPI.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060608'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='30' font-weight='bold' fill='%233b82f6' text-anchor='middle'%3EDE%3C/text%3E%3C/svg%3E">
 <style>
-  /* ============ THEMES ============ */
-  :root, html[data-theme="black"]{
+  :root{
     --bg:#060608; --text:#f2f4f8; --muted:#9aa3b2;
     --card:rgba(255,255,255,.04); --card-border:rgba(255,255,255,.09);
     --nav-bg:rgba(6,6,8,.78); --chip-bg:rgba(16,17,20,.92); --c-card-bg:rgba(12,13,16,.6);
@@ -17,66 +16,6 @@
     --grad:linear-gradient(100deg,#2563eb,#3b82f6,#38bdf8);
     --btn-text:#ffffff; --pill-bg:rgba(255,255,255,.06); --pill-text:#cbd5e1;
     --shadow:rgba(0,0,0,.6); --glow-op:.10;
-  }
-  html[data-theme="professional"]{
-    --bg:#f7f9fc; --text:#0f172a; --muted:#5b6b82;
-    --card:rgba(255,255,255,.78); --card-border:rgba(15,23,42,.09);
-    --nav-bg:rgba(247,249,252,.86); --chip-bg:rgba(255,255,255,.96); --c-card-bg:rgba(255,255,255,.85);
-    --a1:#1d4ed8; --a2:#0ea5e9; --a3:#1e40af;
-    --a1-soft:rgba(29,78,216,.08); --a2-soft:rgba(14,165,233,.08);
-    --grad:linear-gradient(100deg,#1e3a8a,#2563eb,#0ea5e9);
-    --btn-text:#ffffff; --pill-bg:rgba(15,23,42,.045); --pill-text:#334155;
-    --shadow:rgba(15,23,42,.12); --glow-op:.07;
-  }
-  html[data-theme="cyber"]{
-    --bg:#070b14; --text:#e8edf7; --muted:#94a3b8;
-    --card:rgba(255,255,255,.035); --card-border:rgba(255,255,255,.08);
-    --nav-bg:rgba(7,11,20,.72); --chip-bg:rgba(12,18,32,.9); --c-card-bg:rgba(7,11,20,.55);
-    --a1:#22d3ee; --a2:#a78bfa; --a3:#c084fc;
-    --a1-soft:rgba(34,211,238,.12); --a2-soft:rgba(167,139,250,.14);
-    --grad:linear-gradient(100deg,#22d3ee,#818cf8,#c084fc);
-    --btn-text:#04121a; --pill-bg:rgba(255,255,255,.05); --pill-text:#c7d2e4;
-    --shadow:rgba(2,8,20,.55); --glow-op:.16;
-  }
-  html[data-theme="aurora"]{
-    --bg:#0b0716; --text:#f1eafb; --muted:#a89ec4;
-    --card:rgba(255,255,255,.04); --card-border:rgba(216,180,254,.13);
-    --nav-bg:rgba(11,7,22,.72); --chip-bg:rgba(20,12,36,.9); --c-card-bg:rgba(11,7,22,.55);
-    --a1:#e879f9; --a2:#818cf8; --a3:#22d3ee;
-    --a1-soft:rgba(232,121,249,.12); --a2-soft:rgba(129,140,248,.15);
-    --grad:linear-gradient(100deg,#e879f9,#818cf8,#22d3ee);
-    --btn-text:#160a24; --pill-bg:rgba(255,255,255,.05); --pill-text:#d8cdf0;
-    --shadow:rgba(10,4,24,.55); --glow-op:.18;
-  }
-  html[data-theme="ember"]{
-    --bg:#120a08; --text:#fdf0e8; --muted:#c4a99e;
-    --card:rgba(255,255,255,.04); --card-border:rgba(253,186,116,.13);
-    --nav-bg:rgba(18,10,8,.72); --chip-bg:rgba(30,17,12,.9); --c-card-bg:rgba(18,10,8,.55);
-    --a1:#fb923c; --a2:#f472b6; --a3:#facc15;
-    --a1-soft:rgba(251,146,60,.12); --a2-soft:rgba(244,114,182,.14);
-    --grad:linear-gradient(100deg,#fb923c,#f472b6,#facc15);
-    --btn-text:#241005; --pill-bg:rgba(255,255,255,.05); --pill-text:#ecd5c8;
-    --shadow:rgba(20,8,4,.55); --glow-op:.15;
-  }
-  html[data-theme="matrix"]{
-    --bg:#04100a; --text:#e7f6ec; --muted:#8fb8a0;
-    --card:rgba(255,255,255,.035); --card-border:rgba(52,211,153,.13);
-    --nav-bg:rgba(4,16,10,.72); --chip-bg:rgba(8,26,17,.9); --c-card-bg:rgba(4,16,10,.55);
-    --a1:#34d399; --a2:#a3e635; --a3:#22d3ee;
-    --a1-soft:rgba(52,211,153,.12); --a2-soft:rgba(163,230,53,.12);
-    --grad:linear-gradient(100deg,#34d399,#a3e635,#22d3ee);
-    --btn-text:#03130b; --pill-bg:rgba(255,255,255,.05); --pill-text:#c2e4cf;
-    --shadow:rgba(2,14,8,.55); --glow-op:.15;
-  }
-  html[data-theme="light"]{
-    --bg:#f4f7fb; --text:#0f172a; --muted:#5b6b82;
-    --card:rgba(15,23,42,.035); --card-border:rgba(15,23,42,.1);
-    --nav-bg:rgba(244,247,251,.82); --chip-bg:rgba(255,255,255,.92); --c-card-bg:rgba(255,255,255,.72);
-    --a1:#0284c7; --a2:#7c3aed; --a3:#db2777;
-    --a1-soft:rgba(2,132,199,.1); --a2-soft:rgba(124,58,237,.1);
-    --grad:linear-gradient(100deg,#0284c7,#7c3aed,#db2777);
-    --btn-text:#ffffff; --pill-bg:rgba(15,23,42,.05); --pill-text:#334155;
-    --shadow:rgba(15,23,42,.14); --glow-op:.12;
   }
 
   *{margin:0;padding:0;box-sizing:border-box}
@@ -89,7 +28,6 @@
     background:var(--bg);color:var(--text);
     font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
     line-height:1.65;overflow-x:hidden;
-    transition:background-color .5s ease,color .5s ease;
     animation:pageIn .7s ease both;
   }
   @keyframes pageIn{from{opacity:0}to{opacity:1}}
@@ -105,12 +43,11 @@
 
   /* ---------- background ---------- */
   #net{position:fixed;inset:0;z-index:-2;opacity:.55}
-  .glow{position:fixed;border-radius:50%;filter:blur(120px);z-index:-1;pointer-events:none;opacity:var(--glow-op);transition:background .5s}
+  .glow{position:fixed;border-radius:50%;filter:blur(120px);z-index:-1;pointer-events:none;opacity:var(--glow-op)}
   .glow-1{width:520px;height:520px;background:var(--a1);top:-140px;left:-120px}
   .glow-2{width:560px;height:560px;background:var(--a2);bottom:-180px;right:-140px}
-  /* restrained effects for the professional & black themes */
-  html[data-theme="professional"] #net,html[data-theme="black"] #net{opacity:.32}
-  html[data-theme="professional"] .noise,html[data-theme="black"] .noise{opacity:.025}
+  #net{opacity:.32}
+  .noise{opacity:.025}
 
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
   section{position:relative}
@@ -154,35 +91,6 @@
   .nav-links a:hover::after,.nav-links a.active::after{transform:scaleX(1)}
   .nav-links a.active{color:var(--a1)}
   .nav-right{display:flex;align-items:center;gap:10px}
-
-  /* theme switcher */
-  .theme-wrap{position:relative}
-  .theme-btn{
-    width:42px;height:42px;border-radius:12px;border:1px solid var(--card-border);
-    background:var(--card);color:var(--a1);display:flex;align-items:center;justify-content:center;
-    cursor:pointer;transition:.25s;
-  }
-  .theme-btn:hover{border-color:var(--a1);transform:rotate(18deg)}
-  .theme-btn svg{width:19px;height:19px}
-  .theme-panel{
-    position:absolute;right:0;top:calc(100% + 12px);width:210px;
-    background:var(--chip-bg);border:1px solid var(--card-border);border-radius:16px;
-    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-    padding:10px;box-shadow:0 20px 50px var(--shadow);
-    opacity:0;visibility:hidden;transform:translateY(-8px) scale(.97);transition:.25s;
-  }
-  .theme-panel.open{opacity:1;visibility:visible;transform:none}
-  .tp-title{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);padding:6px 10px 8px}
-  .theme-opt{
-    display:flex;align-items:center;gap:11px;width:100%;text-align:left;
-    background:none;border:none;color:var(--text);font-size:.88rem;font-weight:500;
-    padding:9px 10px;border-radius:10px;cursor:pointer;transition:.2s;font-family:inherit;
-  }
-  .theme-opt:hover{background:var(--pill-bg)}
-  .theme-opt.active{background:var(--a1-soft);color:var(--a1)}
-  .sw{width:20px;height:20px;border-radius:50%;flex-shrink:0;border:2px solid rgba(255,255,255,.25)}
-  .theme-opt .chk{margin-left:auto;opacity:0;color:var(--a1)}
-  .theme-opt.active .chk{opacity:1}
 
   .burger{display:none;background:none;border:1px solid var(--card-border);border-radius:10px;padding:9px 11px;cursor:pointer}
   .burger span{display:block;width:20px;height:2px;background:var(--text);margin:4px 0;border-radius:2px;transition:.3s}
@@ -454,10 +362,6 @@
   }
 </style>
 <noscript><style>.reveal{opacity:1;transform:none}</style></noscript>
-<script>
-  /* apply saved theme before paint (v3 key resets old saved choices to the new black default) */
-  try{var t=localStorage.getItem('de-theme-v3');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}
-</script>
 </head>
 <body>
 
@@ -484,21 +388,6 @@
       </ul>
     </nav>
     <div class="nav-right">
-      <div class="theme-wrap">
-        <button class="theme-btn" id="themeBtn" aria-label="Change theme" aria-expanded="false" title="Change theme">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.25-.29-.43-.68-.43-1.12A1.68 1.68 0 0 1 14.46 16.4h2.01A5.53 5.53 0 0 0 22 10.87C22 5.97 17.5 2 12 2z"/></svg>
-        </button>
-        <div class="theme-panel" id="themePanel" role="menu">
-          <div class="tp-title">Choose theme</div>
-          <button class="theme-opt" data-theme="black"><span class="sw" style="background:linear-gradient(135deg,#0a0a0c,#3b82f6)"></span>Midnight Black<span class="chk">✓</span></button>
-          <button class="theme-opt" data-theme="professional"><span class="sw" style="background:linear-gradient(135deg,#1e3a8a,#3b82f6)"></span>Professional<span class="chk">✓</span></button>
-          <button class="theme-opt" data-theme="cyber"><span class="sw" style="background:linear-gradient(135deg,#22d3ee,#c084fc)"></span>Cyber Night<span class="chk">✓</span></button>
-          <button class="theme-opt" data-theme="aurora"><span class="sw" style="background:linear-gradient(135deg,#e879f9,#22d3ee)"></span>Aurora Bloom<span class="chk">✓</span></button>
-          <button class="theme-opt" data-theme="ember"><span class="sw" style="background:linear-gradient(135deg,#fb923c,#f472b6)"></span>Sunset Ember<span class="chk">✓</span></button>
-          <button class="theme-opt" data-theme="matrix"><span class="sw" style="background:linear-gradient(135deg,#34d399,#a3e635)"></span>Matrix Green<span class="chk">✓</span></button>
-          <button class="theme-opt" data-theme="light"><span class="sw" style="background:linear-gradient(135deg,#0284c7,#db2777)"></span>Arctic Light<span class="chk">✓</span></button>
-        </div>
-      </div>
       <button class="burger" id="burger" aria-label="Toggle menu" aria-controls="navLinks" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -818,45 +707,21 @@
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const FINE = matchMedia('(pointer: fine)').matches;
 
-/* ---------- theme switcher ---------- */
-(function(){
-  const btn=document.getElementById('themeBtn'),panel=document.getElementById('themePanel');
-  const opts=[...panel.querySelectorAll('.theme-opt')];
-  function current(){return document.documentElement.getAttribute('data-theme')||'black';}
-  function mark(){opts.forEach(o=>o.classList.toggle('active',o.dataset.theme===current()));}
-  function apply(name){
-    document.documentElement.setAttribute('data-theme',name);
-    try{localStorage.setItem('de-theme-v3',name);}catch(e){}
-    mark();
-    window.dispatchEvent(new Event('themechange'));
-  }
-  btn.addEventListener('click',e=>{
-    e.stopPropagation();
-    const open=panel.classList.toggle('open');
-    btn.setAttribute('aria-expanded',open);
-  });
-  opts.forEach(o=>o.addEventListener('click',()=>{apply(o.dataset.theme);panel.classList.remove('open');btn.setAttribute('aria-expanded','false');}));
-  document.addEventListener('click',e=>{if(!panel.contains(e.target)&&e.target!==btn){panel.classList.remove('open');btn.setAttribute('aria-expanded','false');}});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'){panel.classList.remove('open');btn.setAttribute('aria-expanded','false');}});
-  mark();
-})();
-
-/* ---------- neural network background (theme-aware) ---------- */
+/* ---------- neural network background ---------- */
 (function(){
   const c=document.getElementById('net'),x=c.getContext('2d');
-  let w,h,pts=[],col1=[34,211,238],col2=[167,139,250];
+  let w,h,pts=[],col1=[59,130,246],col2=[56,189,248];
   function hexRgb(hex){
     hex=hex.trim().replace('#','');
     if(hex.length===3)hex=hex.split('').map(ch=>ch+ch).join('');
     return [parseInt(hex.slice(0,2),16),parseInt(hex.slice(2,4),16),parseInt(hex.slice(4,6),16)];
   }
-  function readTheme(){
+  function readPalette(){
     const s=getComputedStyle(document.documentElement);
     col1=hexRgb(s.getPropertyValue('--a1'));
     col2=hexRgb(s.getPropertyValue('--a2'));
   }
-  readTheme();
-  window.addEventListener('themechange',()=>{readTheme();if(REDUCED)draw();});
+  readPalette();
   function size(){
     w=c.width=innerWidth;h=c.height=innerHeight;
     const n=Math.min(90,Math.floor(w*h/16000));
