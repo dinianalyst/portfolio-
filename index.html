@@ -201,9 +201,10 @@
   /* ---------- timeline ---------- */
   .timeline{position:relative;padding-left:34px}
   .timeline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:1px;background:var(--card-border)}
-  #aiCompanion{position:fixed;right:18px;top:14vh;z-index:45;width:48px;height:64px;display:grid;place-items:center;pointer-events:none;transform:translateY(-50%);transition:top .45s cubic-bezier(.2,.8,.2,1)}
+  #aiCompanion{position:absolute;left:50%;top:0;z-index:45;width:48px;height:64px;display:grid;place-items:center;pointer-events:none;transform:translate(-50%,-50%);transition:top .3s cubic-bezier(.2,.8,.2,1),left .35s cubic-bezier(.2,.8,.2,1)}
   #aiCompanion svg{display:block;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 3px 7px rgba(0,0,0,.6));animation:companion-float 3.4s ease-in-out infinite}
   .ai-companion-label{position:absolute;right:54px;top:50%;transform:translateY(-50%);padding:5px 9px;border:1px solid rgba(96,165,250,.25);border-radius:8px;background:rgba(8,12,20,.86);backdrop-filter:blur(10px);color:#b8d3ff;font:600 .62rem ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}
+  #aiCompanion[data-side="left"] .ai-companion-label{left:54px;right:auto}
   #aiCompanion.walking .robot-arm-a,#aiCompanion.walking .robot-leg-a{animation:step-a .38s ease-in-out infinite alternate}
   #aiCompanion.walking .robot-arm-b,#aiCompanion.walking .robot-leg-b{animation:step-b .38s ease-in-out infinite alternate}
   .robot-head,.robot-body{fill:#172538;stroke:#60a5fa;stroke-width:1.2}
@@ -361,7 +362,7 @@
   @keyframes line-down{from{transform:scaleY(0)}to{transform:scaleY(1)}}
   @media(max-width:720px){
     .nav-inner{padding:0 16px;gap:8px}
-    #aiCompanion{right:76px;top:auto!important;bottom:14px;width:34px;height:46px;transform:none}
+    #aiCompanion{width:36px;height:48px}
     .ai-companion-label{display:none}
     .logo{font-size:1rem}
     .nav-right{gap:8px}
@@ -396,7 +397,7 @@
 
 <div id="progress" aria-hidden="true"></div>
 <canvas id="neuralCanvas" aria-hidden="true"></canvas>
-<div id="aiCompanion" aria-hidden="true">
+<div id="aiCompanion" data-section="home" data-side="right" aria-hidden="true">
   <span class="ai-companion-label" id="aiCompanionLabel">Home</span>
   <svg viewBox="0 0 28 48" role="presentation">
     <path class="robot-antenna" d="M14 5V2"/><circle class="robot-eye" cx="14" cy="1.5" r="1.3"/>
@@ -981,6 +982,7 @@ if('IntersectionObserver' in window){
     });
     aiCompanionLabel.textContent=current.dataset.name||id;
     aiCompanion.dataset.section=id;
+    updateScrollUI();
   },{rootMargin:'-28% 0px -58% 0px',threshold:0});
   sections.forEach(section=>sectionObserver.observe(section));
 }else{
@@ -991,7 +993,15 @@ function updateScrollUI(){
   const maxScroll=document.documentElement.scrollHeight-innerHeight;
   const scrollProgress=maxScroll>0?Math.max(0,Math.min(1,scrollY/maxScroll)):0;
   prog.style.transform='scaleX('+scrollProgress+')';
-  if(innerWidth>720)aiCompanion.style.top=`${14+scrollProgress*64}vh`;
+  const activeSection=sections.find(section=>section.id===aiCompanion.dataset.section)||sections[0];
+  const contentBounds=(activeSection.querySelector('.wrap')||activeSection).getBoundingClientRect();
+  const side=sections.indexOf(activeSection)%2===0?'right':'left';
+  const rawX=side==='right'?contentBounds.right+28:contentBounds.left-28;
+  const companionX=Math.max(34,Math.min(innerWidth-34,rawX));
+  const floatY=innerHeight*.54+(REDUCED?0:Math.sin(scrollProgress*Math.PI*sections.length*2)*24);
+  aiCompanion.dataset.side=side;
+  aiCompanion.style.left=`${scrollX+companionX}px`;
+  aiCompanion.style.top=`${scrollY+floatY}px`;
   nav.classList.toggle('scrolled',scrollY>8);
   toTop.classList.toggle('show',scrollY>500);
 }
@@ -1019,6 +1029,7 @@ navLinksEl.addEventListener('click',e=>{
 navLinks.forEach(link=>link.addEventListener('click',()=>{
   aiCompanionLabel.textContent=link.textContent.trim();
   aiCompanion.dataset.section=link.getAttribute('href').slice(1);
+  updateScrollUI();
 }));
 toTop.addEventListener('click',()=>scrollTo({top:0,behavior:REDUCED?'auto':'smooth'}));
 
